@@ -14,9 +14,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <<<<<<< HEAD
-#trans_date_trans_time Unvirariate Analysis
+# Unvirariate Analysis of trans_date_trans_time 
 
-##Checking to see if any NA values exist
+## Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$trans_date_trans_time)) 
@@ -39,10 +39,10 @@ summary(fraudTotal.db$trans_date_trans_time)
 ## Histogram of trans_date_trans_time variable
 
 ```{r}
-hist(fraudTotal.db$trans_date_trans_time, breaks = 10, main = "Histogram of Date/Time Collected", xlab = "trans_date_trans_time in Years")
+hist(fraudTotal.db$trans_date_trans_time, breaks = 10, main = "Histogram of Date/Time Data Collected", xlab = "trans_date_trans_time in Years")
 ```
 
-#cc_num Univariate Analysis
+# Univariate Analysis of cc_num 
 
 ##Checking to see if any NA values exist
 
@@ -80,24 +80,80 @@ hist(fraudTotal.db$cc_num, main = "Historgram of cc_num", xlab = "cc_num Values"
 ```{r}
 boxplot(fraudTotal.db$cc_num)
 ```
-=======
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# Univariate Analysis of merchant
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## Checking to see if any NA values exist
 
-```{r cars}
-summary(cars)
+```{r}
+sum(is.na(fraudTotal.db$merchant)) 
+```
+## Summary of merchant column
+
+```{r}
+summary(fraudTotal.db$merchant)
+```
+## Convert Characater Class to a Factor Class
+```{r}
+fraudTotal.db$merchant <- as.factor(fraudTotal.db$merchant)
+class(fraudTotal.db$merchant)
 ```
 
-## Including Plots
+## Frequency Distribution of trans_date_trans_time variable
 
-You can also embed plots, for example:
+```{r}
+barplot(table(fraudTotal.db$merchant))
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+#hist(fraudTotal.db$merchant, breaks = 10, main = "Histogram of merchant", xlab = "trans_date_trans_time in Years")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+# Univariate Analysis of category 
+
+##Checking to see if any NA values exist
+
+```{r}
+sum(is.na(fraudTotal.db$category)) 
+```
+
+## Summary of category Column
+
+```{r}
+summary(fraudTotal.db$category)
+class(fraudTotal.db$category)
+```
+## Convert Characater Class to a Factor Class
+```{r}
+fraudTotal.db$category <- as.factor(fraudTotal.db$category)
+```
+
+## Find the Standard Deviation and Variance of cc_num variable
+
+```{r}
+#sd(fraudTotal.db$category)
+#var(fraudTotal.db$category)
+```
+
+## Frequency of category
+
+```{r}
+table(fraudTotal.db$category)
+```
+
+## Frequency Distribution of category
+
+```{r}
+barplot(table(fraudTotal.db$category), las = 3, main = "Frequency Distribution of category Field", xlab = "") 
+mtext("catgory Values", side = 1)
+
+```
+
+
+
+
+```{r}
+
+```
+
+
+
 >>>>>>> 771b459096335833e88d99e06476c521b0980a35
