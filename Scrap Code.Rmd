@@ -1,0 +1,79 @@
+---
+title: "Scrap Code"
+author: "Venukanan Subenthiran"
+date: '2022-11-10'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+```{r}
+#fraudTotal.db$trans_date_trans_time <- as.Date(fraudTotal.db$trans_date_trans_time, format = "%Y-%m-%d %H:%M:%S")
+
+library(lubridate)
+
+fraudTotal.db$trans_date_trans_time <- ymd_hms(fraudTotal.db$trans_date_trans_time)
+
+```
+
+## Creating a subset of the NA's
+```{r}
+DateIsNA <- subset(fraudTotal.db, is.na(fraudTotal.db$trans_date_trans_time))
+
+
+```
+
+```{r}
+boxplot(fraudTotal.db$trans_date_trans_time)
+```
+
+```{r}
+table(fraudTotal.db$trans_date_trans_time)
+```
+
+```{r}
+hist(fraudTotal.db$trans_date_trans_time, breaks = 10, main = "Histogram of Date/Time Collected", xlab = "trans_date_trans_time in Years")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

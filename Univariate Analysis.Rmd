@@ -1,0 +1,77 @@
+---
+title: "Univariate Analysis"
+author: "Venukanan Subenthiran"
+date: '2022-11-10'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#trans_date_trans_time Unvirariate Analysis
+
+##Checking to see if any NA values exist
+
+```{r}
+sum(is.na(fraudTotal.db$trans_date_trans_time)) 
+```
+
+## Converting Character to DateTime class
+
+```{r}
+library(lubridate)
+
+fraudTotal.db$trans_date_trans_time <- ymd_hms(fraudTotal.db$trans_date_trans_time)
+```
+
+## Summary of trans_date_trans_time column
+
+```{r}
+summary(fraudTotal.db$trans_date_trans_time)
+```
+
+## Histogram of trans_date_trans_time variable
+
+```{r}
+hist(fraudTotal.db$trans_date_trans_time, breaks = 10, main = "Histogram of Date/Time Collected", xlab = "trans_date_trans_time in Years")
+```
+
+#cc_num Univariate Analysis
+
+##Checking to see if any NA values exist
+
+```{r}
+sum(is.na(fraudTotal.db$cc_num)) 
+```
+
+## Summary of cc_num column
+
+```{r}
+options(scipen = 999)
+summary(fraudTotal.db$cc_num)
+```
+
+## Find the Standard Deviation and Variance of cc_num variable
+
+```{r}
+sd(fraudTotal.db$cc_num)
+var(fraudTotal.db$cc_num)
+```
+
+## Frequency of cc_num
+
+```{r}
+table(fraudTotal.db$cc_num)
+```
+
+## Histogram of cc_num
+
+```{r}
+hist(fraudTotal.db$cc_num, main = "Historgram of cc_num", xlab = "cc_num Values")
+
+```
+
+```{r}
+boxplot(fraudTotal.db$cc_num)
+```
