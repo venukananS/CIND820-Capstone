@@ -1,7 +1,11 @@
 ---
 title: "Univariate Analysis"
 author: "Venukanan Subenthiran"
+<<<<<<< HEAD
 date: '2022-11-10'
+=======
+date: "2022-11-09"
+>>>>>>> 771b459096335833e88d99e06476c521b0980a35
 output: html_document
 ---
 
@@ -9,6 +13,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<<<<<<< HEAD
 #trans_date_trans_time Unvirariate Analysis
 
 ##Checking to see if any NA values exist
@@ -75,3 +80,24 @@ hist(fraudTotal.db$cc_num, main = "Historgram of cc_num", xlab = "cc_num Values"
 ```{r}
 boxplot(fraudTotal.db$cc_num)
 ```
+=======
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+>>>>>>> 771b459096335833e88d99e06476c521b0980a35
