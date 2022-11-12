@@ -1,0 +1,25 @@
+---
+title: "Exploratory Analysis"
+author: "Venukanan Subenthiran"
+date: '2022-11-12'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Explorartoy Analysis
+
+## Normalization of Numeric Values
+
+```{r}
+#install.packages("dplyr")
+library(dplyr)
+
+fraudTotal.db_norm <- fraudTotal.db %>% mutate_each_(list(~scale(.) %>% as.vector), vars = c("cc_num", "amt", "zip", "lat", "long", "city_pop", "unix_time", "merch_lat", "merch_long"))
+
+head(fraudTotal.db_norm)
+
+```
+

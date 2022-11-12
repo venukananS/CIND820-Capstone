@@ -92,8 +92,17 @@ plot(fraudTotal.db$city_pop, fraudTotal.db$is_fraud, main = "Scatterplot of cred
 
 ## Linear Regression of numeric data
 ```{r}
+#install.packages("foreign")
+#install.packages("nnet")
+#install.packages("ggplot2")
+#install.packages("reshape2")
+#library(foreign)
+library(nnet)
+#library(ggplot2)
+library(reshape2)
 
-summary(lm(is_fraud ~ cc_num + amt + zip + lat + long + city_pop + unix_time + merch_lat + merch_long, data = fraudTotal.db))
+
+summary(multinom(is_fraud ~ cc_num + amt + zip + lat + long + city_pop + unix_time + merch_lat + merch_long, data = fraudTotal.db))
 
 ```
 
