@@ -1,0 +1,11 @@
+---
+title: "Bivariate Analysis"
+author: "Venukanan Subenthiran"
+date: "2022-11-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
