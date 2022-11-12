@@ -14,6 +14,16 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <<<<<<< HEAD
+# Understanding the Datafram as a Whole
+## Provides baseline for creating a more details data dictionary.
+```{r}
+
+str(fraudTotal.db)
+
+```
+
+
+
 # Unvirariate Analysis of trans_date_trans_time 
 
 ## Checking to see if any NA values exist
@@ -25,6 +35,7 @@ sum(is.na(fraudTotal.db$trans_date_trans_time))
 ## Converting Character to DateTime class
 
 ```{r}
+#install.packages("lubridate")
 library(lubridate)
 
 fraudTotal.db$trans_date_trans_time <- ymd_hms(fraudTotal.db$trans_date_trans_time)
@@ -64,11 +75,20 @@ sd(fraudTotal.db$cc_num)
 var(fraudTotal.db$cc_num)
 ```
 
+
 ## Frequency of cc_num
 
 ```{r}
-table(fraudTotal.db$cc_num)
+table_cc_num <- table(fraudTotal.db$cc_num)
+head(table_cc_num)
 ```
+
+## Unique Values of cc_num
+```{r}
+unique(fraudTotal.db$cc_num)
+```
+
+
 
 ## Histogram of cc_num
 
@@ -93,6 +113,20 @@ sum(is.na(fraudTotal.db$merchant))
 ```{r}
 summary(fraudTotal.db$merchant)
 ```
+## Check to see all Unique Values
+```{r}
+
+unique(fraudTotal.db$merchant)
+
+```
+```{r}
+table_merchant <- table(fraudTotal.db$merchant)
+head(table_merchant)
+```
+
+
+
+
 ## Convert Characater Class to a Factor Class
 ```{r}
 fraudTotal.db$merchant <- as.factor(fraudTotal.db$merchant)
@@ -173,7 +207,8 @@ var(fraudTotal.db$amt)
 ## Frequency of amt Column
 
 ```{r}
-table(fraudTotal.db$amt)
+table_amt <- table(fraudTotal.db$amt)
+head(table_amt)
 ```
 
 ## Frequency Distribution of amt Column
@@ -223,7 +258,8 @@ class(fraudTotal.db$first)
 ## Frequency of first
 
 ```{r}
-table(fraudTotal.db$first)
+table_first <- table(fraudTotal.db$first)
+head(table_first)
 ```
 
 ## Frequency Distribution of first
@@ -263,7 +299,8 @@ class(fraudTotal.db$last)
 ## Frequency of last
 
 ```{r}
-table(fraudTotal.db$last)
+table_last <- table(fraudTotal.db$last)
+head(table_last)
 ```
 
 ## Frequency Distribution of last
@@ -344,7 +381,8 @@ class(fraudTotal.db$street)
 ## Frequency of category
 
 ```{r}
-table(fraudTotal.db$street)
+table_street <- table(fraudTotal.db$street)
+head(table_street)
 ```
 
 ## Frequency Distribution of category
@@ -384,7 +422,8 @@ fraudTotal.db$city <- as.factor(fraudTotal.db$city)
 ## Frequency of city
 
 ```{r}
-table(fraudTotal.db$city)
+table_city <- table(fraudTotal.db$city)
+head(table_city)
 ```
 
 ## Frequency Distribution of city
@@ -453,20 +492,21 @@ class(fraudTotal.db$zip)
 ```
 ## Convert Characater Class to a Factor Class
 ```{r}
-fraudTotal.db$zip <- as.factor(fraudTotal.db$zip)
+#fraudTotal.db$zip <- as.factor(fraudTotal.db$zip)
 ```
 
 ## Find the Standard Deviation and Variance of cc_num variable
 
 ```{r}
-#sd(fraudTotal.db$zip)
-#var(fraudTotal.db$category)
+sd(fraudTotal.db$zip)
+var(fraudTotal.db$zip)
 ```
 
 ## Frequency of zip
 
 ```{r}
-table(fraudTotal.db$zip)
+table_zip <- table(fraudTotal.db$zip)
+head(table_zip)
 ```
 
 ## Frequency Distribution of zip
@@ -493,20 +533,21 @@ class(fraudTotal.db$lat)
 ```
 ## Convert Characater Class to a Factor Class
 ```{r}
-fraudTotal.db$lat <- as.factor(fraudTotal.db$lat)
+#fraudTotal.db$lat <- as.factor(fraudTotal.db$lat)
 ```
 
 ## Find the Standard Deviation and Variance of cc_num variable
 
 ```{r}
-#sd(fraudTotal.db$category)
-#var(fraudTotal.db$category)
+sd(fraudTotal.db$lat)
+var(fraudTotal.db$lat)
 ```
 
 ## Frequency of lat
 
 ```{r}
-table(fraudTotal.db$lat)
+table_lat <- table(fraudTotal.db$lat)
+head(table_lat)
 ```
 
 ## Frequency Distribution of lat
@@ -533,20 +574,21 @@ class(fraudTotal.db$long)
 ```
 ## Convert Characater Class to a Factor Class
 ```{r}
-fraudTotal.db$long <- as.factor(fraudTotal.db$long)
+#raudTotal.db$long <- as.factor(fraudTotal.db$long)
 ```
 
 ## Find the Standard Deviation and Variance of cc_num variable
 
 ```{r}
-#sd(fraudTotal.db$category)
-#var(fraudTotal.db$category)
+sd(fraudTotal.db$long)
+var(fraudTotal.db$long)
 ```
 
 ## Frequency of long
 
 ```{r}
-table(fraudTotal.db$long)
+table_long <- table(fraudTotal.db$long)
+head(table_long)
 ```
 
 ## Frequency Distribution of long
@@ -586,7 +628,8 @@ var(fraudTotal.db$city_pop)
 ## Frequency of city_pop
 
 ```{r}
-table(fraudTotal.db$city_pop)
+table_city_pop <- table(fraudTotal.db$city_pop)
+head(table_city_pop)
 ```
 
 ## Frequency Distribution of city_pop
@@ -626,7 +669,8 @@ fraudTotal.db$job <- as.factor(fraudTotal.db$job)
 ## Frequency of job
 
 ```{r}
-table(fraudTotal.db$job)
+table_job <- table(fraudTotal.db$job)
+head(table_job)
 ```
 
 ## Frequency Distribution of job
@@ -660,7 +704,7 @@ class(fraudTotal.db$dob)
 ```
 ## Convert Characater Class to a Factor Class
 ```{r}
-fraudTotal.db$category <- as.factor(fraudTotal.db$category)
+#fraudTotal.db$category <- as.factor(fraudTotal.db$category)
 ```
 
 ## Find the Standard Deviation and Variance of dob variable
@@ -673,7 +717,8 @@ var(fraudTotal.db$dob)
 ## Frequency of dob
 
 ```{r}
-table(fraudTotal.db$dob)
+table_dob <- table(fraudTotal.db$dob)
+head(table_dob)
 ```
 
 ## Frequency Distribution of dob
@@ -684,7 +729,7 @@ mtext("dob Values", side = 1)
 
 ```
 
-# Univariate Analysis of job 
+# Univariate Analysis of trans_num 
 
 ##Checking to see if any NA values exist
 
@@ -692,7 +737,7 @@ mtext("dob Values", side = 1)
 sum(is.na(fraudTotal.db$trans_num)) 
 ```
 
-## Summary of job Column
+## Summary of trans_num Column
 
 ```{r}
 summary(fraudTotal.db$trans_num)
@@ -700,7 +745,7 @@ class(fraudTotal.db$trans_num)
 ```
 ## Convert Characater Class to a Factor Class
 ```{r}
-#fraudTotal.db$trans_num <- as.factor(fraudTotal.db$trans_num)
+fraudTotal.db$trans_num <- as.factor(fraudTotal.db$trans_num)
 ```
 
 ## Find the Standard Deviation and Variance of cc_num variable
@@ -713,7 +758,8 @@ class(fraudTotal.db$trans_num)
 ## Frequency of trans_num
 
 ```{r}
-table(fraudTotal.db$trans_num)
+table_trans_num <- table(fraudTotal.db$trans_num)
+head(table_trans_num)
 ```
 
 ## Frequency Distribution of trans_num
@@ -741,7 +787,7 @@ class(fraudTotal.db$unix_time)
 ```
 ## Convert Characater Class to a Factor Class
 ```{r}
-fraudTotal.db$job <- as.factor(fraudTotal.db$job)
+#fraudTotal.db$job <- as.factor(fraudTotal.db$job)
 ```
 
 ## Find the Standard Deviation and Variance of unix_time variable
@@ -754,7 +800,8 @@ var(fraudTotal.db$unix_time)
 ## Frequency of unix_time
 
 ```{r}
-table(fraudTotal.db$unix_time)
+table_unix_time <- table(fraudTotal.db$unix_time)
+head(table_unix_time)
 ```
 
 ## Frequency Distribution of unix_time
@@ -781,20 +828,21 @@ class(fraudTotal.db$merch_long)
 ```
 ## Convert Characater Class to a Factor Class
 ```{r}
-fraudTotal.db$merch_long <- as.factor(fraudTotal.db$merch_long)
+#fraudTotal.db$merch_long <- as.factor(fraudTotal.db$merch_long)
 ```
 
 ## Find the Standard Deviation and Variance of cc_num variable
 
 ```{r}
-#sd(fraudTotal.db$category)
-#var(fraudTotal.db$category)
+sd(fraudTotal.db$merch_long)
+var(fraudTotal.db$merch_long)
 ```
 
 ## Frequency of merch_long
 
 ```{r}
-table(fraudTotal.db$merch_long)
+table_merch_long <- table(fraudTotal.db$merch_long)
+head(table_merch_long)
 ```
 
 ## Frequency Distribution of merch_long
@@ -821,20 +869,21 @@ class(fraudTotal.db$merch_lat)
 ```
 ## Convert Characater Class to a Factor Class
 ```{r}
-fraudTotal.db$merch_lat <- as.factor(fraudTotal.db$merch_lat)
+#fraudTotal.db$merch_lat <- as.factor(fraudTotal.db$merch_lat)
 ```
 
 ## Find the Standard Deviation and Variance of merch_lat variable
 
 ```{r}
-#sd(fraudTotal.db$category)
-#var(fraudTotal.db$category)
+sd(fraudTotal.db$merch_lat)
+var(fraudTotal.db$merch_lat)
 ```
 
 ## Frequency of merch_lat
 
 ```{r}
-table(fraudTotal.db$merch_lat)
+table_merch_lat <- table(fraudTotal.db$merch_lat)
+head(table_merch_lat)
 ```
 
 ## Frequency Distribution of lat
@@ -845,7 +894,15 @@ mtext("merch_lat Values", side = 1)
 
 ```
 
-# Univariate Analysis of is_fraud 
+
+
+
+
+
+
+
+
+# Univariate Analysis of is_fraud (Dependent Variable)
 
 ##Checking to see if any NA values exist
 

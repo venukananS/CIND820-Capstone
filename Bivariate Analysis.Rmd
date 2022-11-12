@@ -9,3 +9,101 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Bivariate Analysis of fraudTotal.db data frame
+
+```{r}
+sum(is.na(fraudTotal.db))
+```
+```{r}
+str(fraudTotal.db)
+```
+
+
+
+## The correlation between attributes other than the Dependant Variable
+```{r}
+#install.packages("corrplot")
+library(corrplot)
+
+subset_fraudTotal.db <- subset(fraudTotal.db, select = c(3, 6, 13, 14, 15, 16, 20, 21, 22))
+corrplot(cor(subset_fraudTotal.db), method = "number")
+
+
+```
+
+
+
+
+## Scatterplot of zip and long
+
+```{r}
+plot(fraudTotal.db$zip, fraudTotal.db$long, main = "Scatterplot of credit card Number and Is Fraud", xlab = "Zip Code", ylab = "Longitude")
+```
+
+## Scatterplot of amt and is_fraud
+
+```{r}
+plot(fraudTotal.db$amt, fraudTotal.db$is_fraud, main = "Scatterplot of amount and Is Fraud", xlab = "Amount", ylab = "Is Fraud")
+```
+
+## Scatterplot of Amt and city_pop
+
+```{r}
+plot(fraudTotal.db$city_pop, fraudTotal.db$amt, main = "Scatterplot of City Population vs Amount", xlab = "City Population", ylab = "Amount")
+```
+
+## Scatterplot of lat and is_fraud
+
+```{r}
+#plot(fraudTotal.db$lat, fraudTotal.db$is_fraud, main = "Scatterplot of credit card Number and Is Fraud", xlab = "Transaction Date and Time", ylab = "Is Fraud")
+```
+
+## Scatterplot of long and is_fraud
+
+```{r}
+#plot(fraudTotal.db$long, fraudTotal.db$is_fraud, main = "Scatterplot of credit card Number and Is Fraud", xlab = "Transaction Date and Time", ylab = "Is Fraud")
+```
+
+## Scatterplot of city_pop and is_fraud
+
+```{r}
+plot(fraudTotal.db$city_pop, fraudTotal.db$is_fraud, main = "Scatterplot of credit card Number and Is Fraud", xlab = "Transaction Date and Time", ylab = "Is Fraud")
+```
+
+## Scatterplot of unix_time and is_fraud
+
+```{r}
+#plot(fraudTotal.db$unix_time, fraudTotal.db$is_fraud, main = "Scatterplot of credit card Number and Is Fraud", xlab = "Transaction Date and Time", ylab = "Is Fraud")
+```
+
+## Scatterplot of merch_lat and is_fraud
+
+```{r}
+#plot(fraudTotal.db$merch_lat, fraudTotal.db$is_fraud, main = "Scatterplot of credit card Number and Is Fraud", xlab = "Transaction Date and Time", ylab = "Is Fraud")
+```
+
+## Scatterplot of merch_long and is_fraud
+
+```{r}
+#plot(fraudTotal.db$merch_long, fraudTotal.db$is_fraud, main = "Scatterplot of credit card Number and Is Fraud", xlab = "Transaction Date and Time", ylab = "Is Fraud")
+```
+
+
+
+## Linear Regression of numeric data
+```{r}
+
+summary(lm(is_fraud ~ cc_num + amt + zip + lat + long + city_pop + unix_time + merch_lat + merch_long, data = fraudTotal.db))
+
+```
+
+
+
+
+
+
+```{r}
+
+```
+
+
