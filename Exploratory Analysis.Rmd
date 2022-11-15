@@ -11,15 +11,35 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Explorartoy Analysis
 
+
+
 ## Normalization of Numeric Values
+
+### Creating a normalization fuction
+```{r}
+min_max_norm <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
+
+```
+
+### Applying normalization to numeric variables
+```{r}
+fraudTotal.db <- as.data.frame(lapply(fraudTotal.db$amt, min_max_norm))
+```
+
+
+
 
 ```{r}
 #install.packages("dplyr")
-library(dplyr)
+#library(dplyr)
 
 fraudTotal.db_norm <- fraudTotal.db %>% mutate_each_(list(~scale(.) %>% as.vector), vars = c("cc_num", "amt", "zip", "lat", "long", "city_pop", "unix_time", "merch_lat", "merch_long"))
 
 head(fraudTotal.db_norm)
 
 ```
+
+
 

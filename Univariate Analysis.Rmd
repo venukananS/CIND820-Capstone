@@ -918,14 +918,14 @@ class(fraudTotal.db$is_fraud)
 ```
 ## Convert Characater Class to a Factor Class
 ```{r}
-fraudTotal.db$is_fraud <- as.factor(fraudTotal.db$is_fraud)
+#fraudTotal.db$is_fraud <- as.factor(fraudTotal.db$is_fraud)
 ```
 
 ## Find the Standard Deviation and Variance of cc_num variable
 
 ```{r}
-#sd(fraudTotal.db$category)
-#var(fraudTotal.db$category)
+sd(fraudTotal.db$category)
+var(fraudTotal.db$category)
 ```
 
 ## Frequency of is_fraud

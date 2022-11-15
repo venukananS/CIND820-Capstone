@@ -9,3 +9,20 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Linear Regression of numeric data
+```{r}
+#install.packages("foreign")
+#install.packages("nnet")
+#install.packages("ggplot2")
+#install.packages("reshape2")
+#library(foreign)
+#library(nnet)
+#library(ggplot2)
+#library(reshape2)
+
+
+#summary(multinom(is_fraud ~ cc_num + amt + zip + lat + long + city_pop + unix_time + merch_lat + merch_long, data = fraudTotal.db))
+
+summary(lm(formula = is_fraud ~ cc_num + amt + zip + lat + long + city_pop + unix_time + merch_lat + merch_long, data = fraudTotal.db))
+
+```

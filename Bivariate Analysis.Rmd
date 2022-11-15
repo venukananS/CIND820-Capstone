@@ -20,16 +20,49 @@ str(fraudTotal.db)
 
 
 
-## The correlation between attributes other than the Dependant Variable
+## The correlation between numeric attributes
 ```{r}
 #install.packages("corrplot")
 library(corrplot)
 
-subset_fraudTotal.db <- subset(fraudTotal.db, select = c(3, 6, 13, 14, 15, 16, 20, 21, 22))
+subset_fraudTotal.db <- subset(fraudTotal.db, select = c(3, 6, 13, 14, 15, 16, 20, 21, 22, 23))
 corrplot(cor(subset_fraudTotal.db), method = "number")
 
 
 ```
+
+## Correlation Analysis of Numeric Variables
+
+### Correlation of zip, lat, long, merch_lat, and merch_long
+```{r}
+
+cor.test(fraudTotal.db$zip, fraudTotal.db$lat, method = "pearson")
+
+cor.test(fraudTotal.db$zip, fraudTotal.db$long, method = "pearson")
+
+cor.test(fraudTotal.db$zip, fraudTotal.db$merch_lat, method = "pearson")
+
+cor.test(fraudTotal.db$zip, fraudTotal.db$merch_long, method = "pearson")
+
+```
+### Correlation of is_fraud and amt
+```{r}
+
+cor.test(fraudTotal.db$is_fraud, fraudTotal.db$amt, method = "pearson")
+
+```
+### Correlation of is_fraud and city_pop
+```{r}
+
+cor.test(fraudTotal.db$is_fraud, fraudTotal.db$city_pop, method = "pearson")
+
+```
+
+
+
+
+
+
 
 
 
@@ -90,21 +123,7 @@ plot(fraudTotal.db$city_pop, fraudTotal.db$is_fraud, main = "Scatterplot of cred
 
 
 
-## Linear Regression of numeric data
-```{r}
-#install.packages("foreign")
-#install.packages("nnet")
-#install.packages("ggplot2")
-#install.packages("reshape2")
-#library(foreign)
-library(nnet)
-#library(ggplot2)
-library(reshape2)
 
-
-summary(multinom(is_fraud ~ cc_num + amt + zip + lat + long + city_pop + unix_time + merch_lat + merch_long, data = fraudTotal.db))
-
-```
 
 
 
