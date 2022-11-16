@@ -57,7 +57,11 @@ cor.test(fraudTotal.db$is_fraud, fraudTotal.db$amt, method = "pearson")
 cor.test(fraudTotal.db$is_fraud, fraudTotal.db$city_pop, method = "pearson")
 
 ```
+## Does Having a Higher City Population Have More Fraud?
+```{r}
+plot(fraudTotal.db$is_fraud, fraudTotal.db$city_pop, main = "Scatterplot of Fraudlent Transactions Based on City Population", xlab = "Fraudulant Transaction", ylab = "City Population", pch = 19)
 
+```
 
 
 

@@ -13,33 +13,70 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
+
+
+## Sub-setting the Data
+
+```{r}
+
+fraudTotal.db_fraud <- subset(fraudTotal.db, is_fraud == 1)
+nrow(fraudTotal.db_fraud)
+
+```
+## Does Having a Higher City Population Have More Fraud?
+```{r}
+
+fraudTotal.db_fraud$city_pop <- ifelse(fraudTotal.db_fraud$city_pop < mean(fraudTotal.db_fraud$city_pop), 0, 1)
+
+library(ggplot2)
+
+fraud_based_on_city_pop <- ggplot(data = fraudTotal.db_fraud, aes(x = factor(city_pop), fill = city_pop)) + geom_bar(stat = "count", width = 0.7, alpha = 0.7) + ggtitle("Fraudulant Transactions By City Population") + xlab("City Population Above or Below Average") + ylab("Number of Fraudulant Transactions") + scale_x_discrete(labels = c("Below City Population Average", "Above City Population Average")) + theme(legend.position = "none")
+fraud_based_on_city_pop
+
+
+```
+
+### What type merchants receive more fraudulant transactions?
+```{r}
+
+
+```
+
+### Are fraud transactions commited more by males of females?
+```{r}
+
+```
+
+
+
+
 ## Normalization of Numeric Values
 
-### Creating a normalization fuction
-```{r}
-min_max_norm <- function(x) {
-  (x - min(x)) / (max(x) - min(x))
-}
-
-```
-
 ### Applying normalization to numeric variables
-```{r}
-fraudTotal.db <- as.data.frame(lapply(fraudTotal.db$amt, min_max_norm))
-```
-
-
-
 
 ```{r}
-#install.packages("dplyr")
-#library(dplyr)
+data2 <- fraudTotal.db[c(3, 6, 13, 14, 15, 16, 20, 21, 22, 23)]
+summary(data2)
+#install.packages("caret")
+library(caret)
 
-fraudTotal.db_norm <- fraudTotal.db %>% mutate_each_(list(~scale(.) %>% as.vector), vars = c("cc_num", "amt", "zip", "lat", "long", "city_pop", "unix_time", "merch_lat", "merch_long"))
+fraudTotal.db_process <- preProcess(as.data.frame(data2), method = c("range"))
 
-head(fraudTotal.db_norm)
-
+fraudTotal.db_norm <- predict(fraudTotal.db_process, as.data.frame(data2))
 ```
 
+### Merging the fraudTotal.db and fraud.db_norm.
+```{r}
 
+fraudTotal.db$cc_num <- fraudTotal.db_norm$cc_num
+fraudTotal.db$amt <- fraudTotal.db_norm$amt
+fraudTotal.db$zip <- fraudTotal.db_norm$zip
+fraudTotal.db$lat <- fraudTotal.db_norm$lat
+fraudTotal.db$long <- fraudTotal.db_norm$long
+fraudTotal.db$city_pop <- fraudTotal.db_norm$city_pop
+fraudTotal.db$unix_time <- fraudTotal.db_norm$unix_time
+fraudTotal.db$merch_lat <- fraudTotal.db_norm$merch_lat
+fraudTotal.db$merch_long <- fraudTotal.db_norm$merch_long
+fraudTotal.db$is_fraud <- fraudTotal.db_norm$is_fraud
 
+```

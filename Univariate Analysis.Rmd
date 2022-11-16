@@ -924,8 +924,8 @@ class(fraudTotal.db$is_fraud)
 ## Find the Standard Deviation and Variance of cc_num variable
 
 ```{r}
-sd(fraudTotal.db$category)
-var(fraudTotal.db$category)
+sd(fraudTotal.db$is_fraud)
+var(fraudTotal.db$is_fraud)
 ```
 
 ## Frequency of is_fraud
