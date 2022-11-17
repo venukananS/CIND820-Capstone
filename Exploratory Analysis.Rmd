@@ -39,11 +39,30 @@ fraud_based_on_city_pop
 ### What type merchants receive more fraudulant transactions?
 ```{r}
 
+category_table <- table(fraudTotal.db_fraud$category)
+category_table
+category_fraud.db <- as.data.frame(category_table)
+colnames(category_fraud.db)[1] <- "Category Type"
+
+#install.packages("treemap")
+library(treemap)
+treemap(category_fraud.db, index = "Category Type", vSize = "Freq", type = "index", title = "Merchant Category Types in Fraudulant Transactions", palette = "HCL", border.col = c("black"), border.lwds = 1, fontsize.labels = 10, fontcolor.labels = "white", fontface.labels = 1, bg.labels = c(0), align.labels = c("left", "top"), overlap.labels = 0.5, inflate.labels = T)
 
 ```
 
 ### Are fraud transactions commited more by males of females?
 ```{r}
+
+gender_table <- table(fraudTotal.db_fraud$gender)
+gender_fraud.db <- as.data.frame(gender_table)
+colnames(gender_fraud.db)[1] <- "Gender"
+
+
+
+library(ggplot2)
+
+fraud_based_on_gender <- ggplot(data = gender_fraud.db, aes(x = Gender, y = Freq , fill = Gender)) + geom_bar(stat = "identity", width = 0.7, alpha = 0.7) + ggtitle("Fraudulant Transactions By Gender") + xlab("Fradulant Transactions Committed Based on Gender") + ylab("Number of Fraudulant Transactions") + scale_x_discrete(labels = c("Fradulant Transactions Committed by Female", "Fradulant Transactions Committed by Male")) + theme(legend.position = "none")
+fraud_based_on_gender
 
 ```
 
