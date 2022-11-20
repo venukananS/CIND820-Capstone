@@ -14,7 +14,10 @@ knitr::opts_chunk$set(echo = TRUE)
 #install.packages("olsrr")
 library(olsrr)
 
-lm_model_numeric <- lm(is_fraud~cc_num+amt+zip+lat+long+city_pop+unix_time+merch_lat+merch_long, data = fraudTotal.db)
+
+
+
+lm_model_numeric <- lm(is_fraud~trans_date_trans_time+cc_num+amt+zip+lat+long+city_pop+dob+unix_time+merch_lat+merch_long, data = fraudTotal.db)
 
 FWD_fit_num <- ols_step_forward_p(lm_model_numeric, penter=0.05)
 
@@ -32,4 +35,62 @@ FWD_fit_cat <- ols_step_forward_p(lm_model_cat, penter=0.05)
 FWD_fit_cat
 
 ```
+## Dementionality Reduction Using Correlation of Categorical Variables
 
+### Chi Square test of merchant and category
+```{r}
+
+chisq.test(fraudTotal.db$merchant, fraudTotal.db$category)
+
+# Category variable to be removed
+
+```
+### Chi Square test of first and last
+```{r}
+
+chisq.test(fraudTotal.db$first, fraudTotal.db$last)
+
+# Last variable to be removed
+
+```
+### Chi Square test of first and gender
+```{r}
+
+chisq.test(fraudTotal.db$first, fraudTotal.db$gender)
+
+```
+### Chi Square test of street and city
+```{r}
+
+chisq.test(fraudTotal.db$street, fraudTotal.db$city)
+
+```
+
+### Chi Square test of city and state
+```{r}
+
+chisq.test(fraudTotal.db$city, fraudTotal.db$state)
+
+```
+
+
+### Chi Square test of category and job
+```{r}
+
+chisq.test(fraudTotal.db$category, fraudTotal.db$job)
+
+```
+
+### Chi Square test of gender and job
+```{r}
+
+chisq.test(fraudTotal.db$gender, fraudTotal.db$job)
+
+```
+
+### Chi Square test of category and trans_num
+```{r}
+
+chisq.test(fraudTotal.db$category, fraudTotal.db$trans_num)
+
+```

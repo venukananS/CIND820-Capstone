@@ -18,27 +18,20 @@ knitr::opts_chunk$set(echo = TRUE)
 #install.packages("caTools")
 library(caTools)
 
+
+
 set.seed(123)
 
 TrainTestData <- sample.split(Y = fraudTotal.db$is_fraud, SplitRatio = 0.7)
 FD_Train <- fraudTotal.db[TrainTestData,]
 FD_Test <- fraudTotal.db[!TrainTestData,]
 
-```
-
-
-## Treatment for Imbalance Data using SMOTE
-```{r}
-#install.packages("smotefamily")
-#library(smotefamily)
-
-#FD_smote <- SMOTE(FD_Train, FD_Train$is_fraud, K=2)
-
 #converting dob to numeric
 FD_Train$dob <- as.numeric(FD_Train$dob)
+FD_Test$dob <- as.numeric(FD_Test$dob)
 #convertig trans_date_trans_time to numeric
 FD_Train$trans_date_trans_time <- as.numeric(as.POSIXct(FD_Train$trans_date_trans_time))
-
+FD_Test$trans_date_trans_time <- as.numeric(as.POSIXct(FD_Test$trans_date_trans_time))
 #If there is a need to convert back then need to figure out the way to do that.
 ###FD_Train$trans_date_trans_time <- strptime(FD_Train$trans_date_trans_time, format = "%Y%m%d %H:%M:%s")
 ###FD_Train_trial2 <- as.numeric(FD_Train$trans_date_trans_time)
@@ -52,8 +45,12 @@ FD_Train$trans_date_trans_time <- as.numeric(as.POSIXct(FD_Train$trans_date_tran
 ###FD_Train$dob <- as.Date(FD_Train$dob, origin = "1970-01-01")
 
 
+```
 
-install.packages("ROSE")
+
+## Treatment for Imbalance Data using SMOTE
+```{r}
+#install.packages("ROSE")
 library(ROSE)
 
 table(FD_Train$is_fraud)
@@ -64,21 +61,23 @@ table(FD_ROSE$data$is_fraud)
 
 FD_Train_ROSE <- FD_ROSE$data
 
-FD_ROSE$data$trans_date_trans_time
+Reduced_FD_Train_ROSE <- subset(FD_Train_ROSE, select = c(2, 4, 6, 10, 11, 13, 14, 18, 20, 22, 23))
 
 ```
 
 
 ## Cross Validation???
 ```{r}
+#install.packages("caret")
+library(caret)
 
 #specify cross-validation method
-control <- trainControl(method = "cv", number = 10)
+control <- trainControl(method = "cv", number = 2)
 
 #fit a regression model and use k-fold CD to evaluate performance
-mod <- train(is_fraud ~ X, trans_date_trans_time, cc_num, merchant, category, amt, first, last, gender, street, city, state, zip, lat, long, city_pop, job, dob, trans_num, unix_time, merch_lat, merch_long, data = FD_Train_ROSE, method = "lm", trControl = control)
+mod <- train(is_fraud ~., merch_long, data = Reduced_FD_Train_ROSE, method = "lm", trControl = control)
 
-
+# Unable to run, due to limited RAM size on PC.
 ```
 
 
@@ -88,6 +87,19 @@ mod <- train(is_fraud ~ X, trans_date_trans_time, cc_num, merchant, category, am
 ## Classification
 
 ### Decision Tree
+```{r}
+#install.packages("rpart.plot")
+library(rpart.plot)
+
+fit_tree <- rpart(is_fraud~., data = Reduced_FD_Train_ROSE, method = "class")
+rpart.plot(fit_tree, extra = 110)
+
+# Prediction
+predict_tree <- predict(fit_tree, FD_Test, type = "class")
+
+
+
+```
 
 
 ### Random Forest
@@ -104,6 +116,11 @@ mod <- train(is_fraud ~ X, trans_date_trans_time, cc_num, merchant, category, am
 ## Confusion Matrix
 
 ### Decision Tree
+```{r}
+table(FD_Test$is_fraud, predict_tree)
+
+```
+
 
 ### Random Forest
 
