@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 sum(is.na(fraudTotal.db))
 ```
+
 ```{r}
 str(fraudTotal.db)
 ```
@@ -57,21 +58,12 @@ cor.test(fraudTotal.db$is_fraud, fraudTotal.db$amt, method = "pearson")
 cor.test(fraudTotal.db$is_fraud, fraudTotal.db$city_pop, method = "pearson")
 
 ```
-## Does Having a Higher City Population Have More Fraud?
-```{r}
-plot(fraudTotal.db$is_fraud, fraudTotal.db$city_pop, main = "Scatterplot of Fraudlent Transactions Based on City Population", xlab = "Fraudulant Transaction", ylab = "City Population", pch = 19)
-
-```
 
 
 
 
 
-
-
-
-
-## Scatterplot of zip and long
+### Scatterplot of zip and long
 
 ```{r}
 plot(fraudTotal.db$zip, fraudTotal.db$long, main = "Scatterplot of credit card Number and Is Fraud", xlab = "Zip Code", ylab = "Longitude")
@@ -132,10 +124,58 @@ plot(fraudTotal.db$city_pop, fraudTotal.db$is_fraud, main = "Scatterplot of cred
 
 
 
+## Correlation of Categorical Variables
 
-
+### Chi Square test of merchant and category
 ```{r}
+
+chisq.test(fraudTotal.db$merchant, fraudTotal.db$category)
+
+```
+### Chi Square test of first and last
+```{r}
+
+chisq.test(fraudTotal.db$first, fraudTotal.db$last)
+
+```
+### Chi Square test of first and gender
+```{r}
+
+chisq.test(fraudTotal.db$first, fraudTotal.db$gender)
+
+```
+### Chi Square test of street and city
+```{r}
+
+chisq.test(fraudTotal.db$street, fraudTotal.db$city)
+
+```
+
+### Chi Square test of city and state
+```{r}
+
+chisq.test(fraudTotal.db$city, fraudTotal.db$state)
 
 ```
 
 
+### Chi Square test of category and job
+```{r}
+
+chisq.test(fraudTotal.db$category, fraudTotal.db$job)
+
+```
+
+### Chi Square test of gender and job
+```{r}
+
+chisq.test(fraudTotal.db$gender, fraudTotal.db$job)
+
+```
+
+### Chi Square test of category and trans_num
+```{r}
+
+chisq.test(fraudTotal.db$category, fraudTotal.db$trans_num)
+
+```

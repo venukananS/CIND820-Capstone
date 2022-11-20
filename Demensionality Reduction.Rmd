@@ -9,10 +9,27 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Demensionality Reduction using Principal Component Analysis (PCA)
+# Feature Selection Using Forward Selection for Numeric Variables
+```{r}
+#install.packages("olsrr")
+library(olsrr)
+
+lm_model_numeric <- lm(is_fraud~cc_num+amt+zip+lat+long+city_pop+unix_time+merch_lat+merch_long, data = fraudTotal.db)
+
+FWD_fit_num <- ols_step_forward_p(lm_model_numeric, penter=0.05)
+
+FWD_fit_num
+
+```
+
+# Feature Selection Using Forward Selection for Categorical Variables
 ```{r}
 
+lm_model_cat <- lm(is_fraud~merchant+category, data = fraudTotal.db)
 
+FWD_fit_cat <- ols_step_forward_p(lm_model_cat, penter=0.05)
+
+FWD_fit_cat
 
 ```
 

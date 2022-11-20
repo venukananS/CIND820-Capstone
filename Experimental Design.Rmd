@@ -1,0 +1,114 @@
+---
+title: "Experimental Design"
+author: "Venukanan Subenthiran"
+date: "2022-11-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Experimental Design
+
+## Splitting the Data into Training and Test Sets
+
+```{r}
+
+#install.packages("caTools")
+library(caTools)
+
+set.seed(123)
+
+TrainTestData <- sample.split(Y = fraudTotal.db$is_fraud, SplitRatio = 0.7)
+FD_Train <- fraudTotal.db[TrainTestData,]
+FD_Test <- fraudTotal.db[!TrainTestData,]
+
+```
+
+
+## Treatment for Imbalance Data using SMOTE
+```{r}
+#install.packages("smotefamily")
+#library(smotefamily)
+
+#FD_smote <- SMOTE(FD_Train, FD_Train$is_fraud, K=2)
+
+#converting dob to numeric
+FD_Train$dob <- as.numeric(FD_Train$dob)
+#convertig trans_date_trans_time to numeric
+FD_Train$trans_date_trans_time <- as.numeric(as.POSIXct(FD_Train$trans_date_trans_time))
+
+#If there is a need to convert back then need to figure out the way to do that.
+###FD_Train$trans_date_trans_time <- strptime(FD_Train$trans_date_trans_time, format = "%Y%m%d %H:%M:%s")
+###FD_Train_trial2 <- as.numeric(FD_Train$trans_date_trans_time)
+
+###FD_Train$trans_date_trans_time <- as.POSIXct(format(FD_Train$trans_date_trans_time))
+###as.Date.POSIXct(FD_Train$trans_date_trans_time, origin = "1970-01-01 00:00")
+
+
+
+#This will convert dob back to date.
+###FD_Train$dob <- as.Date(FD_Train$dob, origin = "1970-01-01")
+
+
+
+install.packages("ROSE")
+library(ROSE)
+
+table(FD_Train$is_fraud)
+
+FD_ROSE <- ROSE(formula = is_fraud~.,data = FD_Train, seed = 345)
+
+table(FD_ROSE$data$is_fraud)
+
+FD_Train_ROSE <- FD_ROSE$data
+
+FD_ROSE$data$trans_date_trans_time
+
+```
+
+
+## Cross Validation???
+```{r}
+
+#specify cross-validation method
+control <- trainControl(method = "cv", number = 10)
+
+#fit a regression model and use k-fold CD to evaluate performance
+mod <- train(is_fraud ~ X, trans_date_trans_time, cc_num, merchant, category, amt, first, last, gender, street, city, state, zip, lat, long, city_pop, job, dob, trans_num, unix_time, merch_lat, merch_long, data = FD_Train_ROSE, method = "lm", trControl = control)
+
+
+```
+
+
+
+# Modeling
+
+## Classification
+
+### Decision Tree
+
+
+### Random Forest
+
+
+### K-Nearest Neighbours
+
+## Regression
+
+### Logistic Regression biraviate??
+
+# Evaluation
+
+## Confusion Matrix
+
+### Decision Tree
+
+### Random Forest
+
+### K-Nearest Neighbours
+
+### Logistic Regression
+
+## Accuracy, Recall, and Precision

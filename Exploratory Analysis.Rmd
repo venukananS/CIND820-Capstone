@@ -11,10 +11,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Explorartoy Analysis
 
-
-
-
-
 ## Sub-setting the Data
 
 ```{r}
@@ -65,9 +61,6 @@ fraud_based_on_gender <- ggplot(data = gender_fraud.db, aes(x = Gender, y = Freq
 fraud_based_on_gender
 
 ```
-
-
-
 
 ## Normalization of Numeric Values
 

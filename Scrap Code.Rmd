@@ -63,7 +63,30 @@ hist(fraudTotal.db$trans_date_trans_time, breaks = 10, main = "Histogram of Date
 
 
 
+# Demensionality Reduction using Principal Component Analysis (PCA)
+```{r}
 
+pcaCharts <- function(x) {
+    x.var <- x$sdev ^ 2
+    x.pvar <- x.var/sum(x.var)
+    print("proportions of variance:")
+    print(x.pvar)
+    
+    par(mfrow=c(2,2))
+    plot(x.pvar,xlab="Principal component", ylab="Proportion of variance explained", ylim=c(0,1), type='b')
+    plot(cumsum(x.pvar),xlab="Principal component", ylab="Cumulative Proportion of variance explained", ylim=c(0,1), type='b')
+    screeplot(x)
+    screeplot(x,type="l")
+    par(mfrow=c(1,1))
+}
+
+
+fraudTotal.db_pca <- prcomp(fraudTotal.db_norm[c(1:9)], center = TRUE, scale. = TRUE)
+print(fraudTotal.db_pca)
+summary(fraudTotal.db_pca)
+pcaCharts(fraudTotal.db_pca)
+
+```
 
 
 

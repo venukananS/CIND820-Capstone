@@ -24,15 +24,15 @@ str(fraudTotal.db)
 
 
 
-# Unvirariate Analysis of trans_date_trans_time 
+## Unvirariate Analysis of trans_date_trans_time 
 
-## Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$trans_date_trans_time)) 
 ```
 
-## Converting Character to DateTime class
+### Converting Character to DateTime class
 
 ```{r}
 #install.packages("lubridate")
@@ -41,34 +41,34 @@ library(lubridate)
 fraudTotal.db$trans_date_trans_time <- ymd_hms(fraudTotal.db$trans_date_trans_time)
 ```
 
-## Summary of trans_date_trans_time column
+### Summary of trans_date_trans_time column
 
 ```{r}
 summary(fraudTotal.db$trans_date_trans_time)
 ```
 
-## Histogram of trans_date_trans_time variable
+### Histogram of trans_date_trans_time variable
 
 ```{r}
-hist(fraudTotal.db$trans_date_trans_time, breaks = 10, main = "Histogram of Date/Time Data Collected", xlab = "trans_date_trans_time in Years")
+hist(fraudTotal.db$trans_date_trans_time, breaks = 10 , main = "Histogram of Date/Time Data Collected", xlab = "trans_date_trans_time in Years")
 ```
 
-# Univariate Analysis of cc_num 
+## Univariate Analysis of cc_num 
 
-##Checking to see if any NA values exist
+###Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$cc_num)) 
 ```
 
-## Summary of cc_num column
+### Summary of cc_num column
 
 ```{r}
 options(scipen = 999)
 summary(fraudTotal.db$cc_num)
 ```
 
-## Find the Standard Deviation and Variance of cc_num variable
+### Find the Standard Deviation and Variance of cc_num variable
 
 ```{r}
 sd(fraudTotal.db$cc_num)
@@ -76,47 +76,47 @@ var(fraudTotal.db$cc_num)
 ```
 
 
-## Frequency of cc_num
+### Frequency of cc_num values
 
 ```{r}
 table_cc_num <- table(fraudTotal.db$cc_num)
 head(table_cc_num)
 ```
 
-## Unique Values of cc_num
+### Unique Values of cc_num
 ```{r}
-unique(fraudTotal.db$cc_num)
+head(unique(fraudTotal.db$cc_num))
 ```
 
 
 
-## Histogram of cc_num
+### Histogram of cc_num
 
 ```{r}
-hist(fraudTotal.db$cc_num, main = "Historgram of cc_num", xlab = "cc_num Values")
+hist(fraudTotal.db$cc_num, main = "Historgram of Credit Card Numbers", xlab = "Credit Card Numbers")
 
 ```
-
+### Boxplot of cc_num variable
 ```{r}
 boxplot(fraudTotal.db$cc_num)
 ```
 
-# Univariate Analysis of merchant
+## Univariate Analysis of merchant
 
-## Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$merchant)) 
 ```
-## Summary of merchant column
+### Summary of merchant column
 
 ```{r}
 summary(fraudTotal.db$merchant)
 ```
-## Check to see all Unique Values
+### Check to see all Unique Values
 ```{r}
 
-unique(fraudTotal.db$merchant)
+head(unique(fraudTotal.db$merchant))
 
 ```
 ```{r}
@@ -127,47 +127,38 @@ head(table_merchant)
 
 
 
-## Convert Characater Class to a Factor Class
+### Convert Characater Class to a Factor Class
 ```{r}
 fraudTotal.db$merchant <- as.factor(fraudTotal.db$merchant)
 class(fraudTotal.db$merchant)
 ```
 
-## Frequency Distribution of trans_date_trans_time variable
+### Frequency Distribution of trans_date_trans_time variable
 
 ```{r}
-barplot(table(fraudTotal.db$merchant))
-
-#hist(fraudTotal.db$merchant, breaks = 10, main = "Histogram of merchant", xlab = "trans_date_trans_time in Years")
+barplot(table(fraudTotal.db$merchant), main = "Frequency Distribution of Merchants", xlab = "Merchants", ylab = "Frequency")
 ```
 
-# Univariate Analysis of category 
+## Univariate Analysis of category 
 
-##Checking to see if any NA values exist
+###Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$category)) 
 ```
 
-## Summary of category Column
+### Summary of category Column
 
 ```{r}
 summary(fraudTotal.db$category)
 class(fraudTotal.db$category)
 ```
-## Convert Characater Class to a Factor Class
+### Convert Characater Class to a Factor Class
 ```{r}
 fraudTotal.db$category <- as.factor(fraudTotal.db$category)
 ```
 
-## Find the Standard Deviation and Variance of cc_num variable
-
-```{r}
-#sd(fraudTotal.db$category)
-#var(fraudTotal.db$category)
-```
-
-## Frequency of category
+### Frequency of category values
 
 ```{r}
 table(fraudTotal.db$category)
@@ -176,46 +167,46 @@ table(fraudTotal.db$category)
 ## Frequency Distribution of category
 
 ```{r}
-barplot(table(fraudTotal.db$category), las = 3, main = "Frequency Distribution of category Field", xlab = "") 
-mtext("catgory Values", side = 1)
+barplot(table(fraudTotal.db$category), las = 3, main = "Frequency Distribution of Merchant Categories", xlab = "", ylab = "Frequency") 
+mtext("Catgory Values", side = 1)
 
 ```
 
 
-# Univariate Analysis of amt 
+## Univariate Analysis of amt 
 
-##Checking to see if any NA values exist
+###Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$amt)) 
 ```
 
-## Summary of amt Column
+### Summary of amt Column
 
 ```{r}
 summary(fraudTotal.db$amt)
 class(fraudTotal.db$amt)
 ```
 
-## Find the Standard Deviation and Variance of amt Column
+### Find the Standard Deviation and Variance of amt Column
 
 ```{r}
 sd(fraudTotal.db$amt)
 var(fraudTotal.db$amt)
 ```
 
-## Frequency of amt Column
+### Frequency of amt Column
 
 ```{r}
 table_amt <- table(fraudTotal.db$amt)
 head(table_amt)
 ```
 
-## Frequency Distribution of amt Column
+### Frequency Distribution of amt Column
 
 ```{r}
-barplot(table(fraudTotal.db$amt), las = 3, main = "Frequency Distribution of amt Field", xlab = "") 
-mtext("amt Values", side = 1)
+barplot(table(fraudTotal.db$amt), las = 3, main = "Frequency Distribution of Amount", xlab = "", ylab = "Frequency") 
+mtext("Amount Values", side = 1)
 
 ```
 ## Boxplot of amt Column
@@ -229,116 +220,97 @@ boxplot(fraudTotal.db$amt)
 
 ```
 
-# Univariate Analysis of first 
+## Univariate Analysis of first 
 
-##Checking to see if any NA values exist
+###Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$first)) 
 ```
 
-## Summary of first Column
+### Summary of first Column
 
 ```{r}
 summary(fraudTotal.db$first)
 class(fraudTotal.db$first)
 ```
-## Convert Characater Class to a Factor Class
+### Convert Characater Class to a Factor Class
 ```{r}
-#fraudTotal.db$category <- as.factor(fraudTotal.db$category)
+fraudTotal.db$first <- as.factor(fraudTotal.db$first)
 ```
 
-## Find the Standard Deviation and Variance of cc_num variable
 
-```{r}
-#sd(fraudTotal.db$category)
-#var(fraudTotal.db$category)
-```
-
-## Frequency of first
-
+### Frequency of first
 ```{r}
 table_first <- table(fraudTotal.db$first)
 head(table_first)
 ```
 
-## Frequency Distribution of first
+### Frequency Distribution of first
 
 ```{r}
-barplot(table(fraudTotal.db$first), las = 3, main = "Frequency Distribution of first Field", xlab = "") 
-mtext("first Values", side = 1)
+barplot(table(fraudTotal.db$first), las = 3, main = "Frequency Distribution of first Field", xlab = "", ylab = "Frequency") 
+mtext("First Names of Card Holders", side = 1)
 
 ```
 
-# Univariate Analysis of last 
+## Univariate Analysis of last 
 
-##Checking to see if any NA values exist
+###Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$last)) 
 ```
 
-## Summary of last Column
+### Summary of last Column
 
 ```{r}
 summary(fraudTotal.db$last)
 class(fraudTotal.db$last)
 ```
-## Convert Characater Class to a Factor Class
+### Convert Characater Class to a Factor Class
 ```{r}
-#fraudTotal.db$category <- as.factor(fraudTotal.db$category)
+fraudTotal.db$last <- as.factor(fraudTotal.db$last)
 ```
 
-## Find the Standard Deviation and Variance of cc_num variable
 
-```{r}
-#sd(fraudTotal.db$category)
-#var(fraudTotal.db$category)
-```
-
-## Frequency of last
+### Frequency of last
 
 ```{r}
 table_last <- table(fraudTotal.db$last)
 head(table_last)
 ```
 
-## Frequency Distribution of last
+### Frequency Distribution of last
 
 ```{r}
-barplot(table(fraudTotal.db$last), las = 3, main = "Frequency Distribution of last Field", xlab = "") 
-mtext("last Values", side = 1)
+barplot(table(fraudTotal.db$last), las = 3, main = "Frequency Distribution of last Field", xlab = "", ylab = "Frequency") 
+mtext("Last Names of Card Holders", side = 1)
 
 ```
 
 
-# Univariate Analysis of gender 
+## Univariate Analysis of gender 
 
-##Checking to see if any NA values exist
+###Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$gender)) 
 ```
 
-## Summary of gender Column
+### Summary of gender Column
 
 ```{r}
 summary(fraudTotal.db$gender)
 class(fraudTotal.db$gender)
 ```
-## Convert Characater Class to a Factor Class
+### Convert Characater Class to a Factor Class
 ```{r}
 fraudTotal.db$gender <- as.factor(fraudTotal.db$gender)
 ```
 
-## Find the Standard Deviation and Variance of cc_num variable
 
-```{r}
-#sd(fraudTotal.db$gender)
-#var(fraudTotal.db$category)
-```
-
-## Frequency of gender
+### Frequency of gender
 
 ```{r}
 table(fraudTotal.db$gender)
@@ -347,348 +319,313 @@ table(fraudTotal.db$gender)
 ## Frequency Distribution of gender
 
 ```{r}
-barplot(table(fraudTotal.db$gender), las = 3, main = "Frequency Distribution of gender Field", xlab = "") 
-mtext("gender Values", side = 1)
+barplot(table(fraudTotal.db$gender), las = 1, main = "Frequency Distribution of Gender", xlab = "", ylab = "Frequency") 
+mtext("Gender", side = 1)
 
 ```
 
-# Univariate Analysis of street 
+## Univariate Analysis of street 
 
-##Checking to see if any NA values exist
+###Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$street)) 
 ```
 
-## Summary of street Column
+### Summary of street Column
 
 ```{r}
 summary(fraudTotal.db$street)
 class(fraudTotal.db$street)
 ```
-## Convert Characater Class to a Factor Class
+### Convert Characater Class to a Factor Class
 ```{r}
-#fraudTotal.db$category <- as.factor(fraudTotal.db$category)
+fraudTotal.db$street <- as.factor(fraudTotal.db$street)
 ```
 
-## Find the Standard Deviation and Variance of cc_num variable
 
-```{r}
-#sd(fraudTotal.db$category)
-#var(fraudTotal.db$category)
-```
-
-## Frequency of category
+### Frequency of Street
 
 ```{r}
 table_street <- table(fraudTotal.db$street)
 head(table_street)
 ```
 
-## Frequency Distribution of category
+### Frequency Distribution of street
 
 ```{r}
-barplot(table(fraudTotal.db$street), las = 3, main = "Frequency Distribution of street Field", xlab = "") 
-mtext("street Values", side = 1)
+barplot(table(fraudTotal.db$street), las = 3, main = "Frequency Distribution of Addresses", xlab = "", ylab = "Frequency") 
+mtext("Addresses", side = 1)
 
 ```
 
-# Univariate Analysis of city 
+## Univariate Analysis of city 
 
-##Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$city)) 
 ```
 
-## Summary of city Column
+### Summary of city Column
 
 ```{r}
 summary(fraudTotal.db$city)
 class(fraudTotal.db$city)
 ```
-## Convert Characater Class to a Factor Class
+### Convert Characater Class to a Factor Class
 ```{r}
 fraudTotal.db$city <- as.factor(fraudTotal.db$city)
 ```
 
-## Find the Standard Deviation and Variance of cc_num variable
 
-```{r}
-#sd(fraudTotal.db$category)
-#var(fraudTotal.db$category)
-```
-
-## Frequency of city
+### Frequency of city
 
 ```{r}
 table_city <- table(fraudTotal.db$city)
 head(table_city)
 ```
 
-## Frequency Distribution of city
+### Frequency Distribution of city
 
 ```{r}
-barplot(table(fraudTotal.db$city), las = 3, main = "Frequency Distribution of city Field", xlab = "") 
-mtext("city Values", side = 1)
+barplot(table(fraudTotal.db$city), las = 3, main = "Frequency Distribution of Cities", xlab = "", ylab = "Frequency") 
+mtext("Cities", side = 1)
 
 ```
 
 
 
-# Univariate Analysis of state 
+## Univariate Analysis of state 
 
-##Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$state)) 
 ```
 
-## Summary of state Column
+### Summary of state Column
 
 ```{r}
 summary(fraudTotal.db$state)
 class(fraudTotal.db$state)
 ```
-## Convert Characater Class to a Factor Class
+### Convert Characater Class to a Factor Class
 ```{r}
 fraudTotal.db$state <- as.factor(fraudTotal.db$state)
 ```
 
-## Find the Standard Deviation and Variance of cc_num variable
 
-```{r}
-#sd(fraudTotal.db$category)
-#var(fraudTotal.db$category)
-```
-
-## Frequency of category
+### Frequency of state
 
 ```{r}
 table(fraudTotal.db$state)
 ```
 
-## Frequency Distribution of category
+### Frequency Distribution of state
 
 ```{r}
-barplot(table(fraudTotal.db$state), las = 3, main = "Frequency Distribution of state Field", xlab = "") 
-mtext("state Values", side = 1)
+barplot(table(fraudTotal.db$state), las = 3, main = "Frequency Distribution of States", xlab = "", ylab = "Frequency") 
+mtext("States", side = 1)
 
 ```
 
-# Univariate Analysis of zip 
+## Univariate Analysis of zip 
 
-##Checking to see if any NA values exist
+###Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$zip)) 
 ```
 
-## Summary of zip Column
+### Summary of zip Column
 
 ```{r}
 summary(fraudTotal.db$zip)
 class(fraudTotal.db$zip)
 ```
-## Convert Characater Class to a Factor Class
-```{r}
-#fraudTotal.db$zip <- as.factor(fraudTotal.db$zip)
-```
 
-## Find the Standard Deviation and Variance of cc_num variable
+
+### Find the Standard Deviation and Variance of zip variable
 
 ```{r}
 sd(fraudTotal.db$zip)
 var(fraudTotal.db$zip)
 ```
 
-## Frequency of zip
+### Frequency of zip
 
 ```{r}
 table_zip <- table(fraudTotal.db$zip)
 head(table_zip)
 ```
 
-## Frequency Distribution of zip
+### Frequency Distribution of zip
 
 ```{r}
-barplot(table(fraudTotal.db$zip), las = 3, main = "Frequency Distribution of zip Field", xlab = "") 
-mtext("zip Values", side = 1)
+barplot(table(fraudTotal.db$zip), las = 3, main = "Frequency Distribution of Zip Codes", xlab = "", ylab = "Frequency") 
+mtext("Zip Codes", side = 1)
 
 ```
 
-# Univariate Analysis of lat 
+## Univariate Analysis of lat 
 
-##Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$lat)) 
 ```
 
-## Summary of lat Column
+### Summary of lat Column
 
 ```{r}
 summary(fraudTotal.db$lat)
 class(fraudTotal.db$lat)
 ```
-## Convert Characater Class to a Factor Class
-```{r}
-#fraudTotal.db$lat <- as.factor(fraudTotal.db$lat)
-```
 
-## Find the Standard Deviation and Variance of cc_num variable
+
+### Find the Standard Deviation and Variance of lat variable
 
 ```{r}
 sd(fraudTotal.db$lat)
 var(fraudTotal.db$lat)
 ```
 
-## Frequency of lat
+### Frequency of lat
 
 ```{r}
 table_lat <- table(fraudTotal.db$lat)
 head(table_lat)
 ```
 
-## Frequency Distribution of lat
+### Frequency Distribution of lat
 
 ```{r}
-barplot(table(fraudTotal.db$lat), las = 3, main = "Frequency Distribution of lat Field", xlab = "") 
-mtext("lat Values", side = 1)
+barplot(table(fraudTotal.db$lat), las = 3, main = "Frequency Distribution of Latitude", xlab = "", ylab = "Frequency") 
+mtext("Latitude", side = 1)
 
 ```
 
-# Univariate Analysis of long 
+## Univariate Analysis of long 
 
-##Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$long)) 
 ```
 
-## Summary of long Column
+### Summary of long Column
 
 ```{r}
 summary(fraudTotal.db$long)
 class(fraudTotal.db$long)
 ```
-## Convert Characater Class to a Factor Class
-```{r}
-#raudTotal.db$long <- as.factor(fraudTotal.db$long)
-```
 
-## Find the Standard Deviation and Variance of cc_num variable
+
+### Find the Standard Deviation and Variance of long variable
 
 ```{r}
 sd(fraudTotal.db$long)
 var(fraudTotal.db$long)
 ```
 
-## Frequency of long
+### Frequency of long
 
 ```{r}
 table_long <- table(fraudTotal.db$long)
 head(table_long)
 ```
 
-## Frequency Distribution of long
+### Frequency Distribution of long
 
 ```{r}
-barplot(table(fraudTotal.db$long), las = 3, main = "Frequency Distribution of long Field", xlab = "") 
-mtext("long Values", side = 1)
+barplot(table(fraudTotal.db$long), las = 3, main = "Frequency Distribution of Longitude", xlab = "", ylab = "Frequency") 
+mtext("Longitude", side = 1)
 
 ```
 
-# Univariate Analysis of city_pop 
+## Univariate Analysis of city_pop 
 
-##Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$city_pop)) 
 ```
 
-## Summary of city_pop Column
+### Summary of city_pop Column
 
 ```{r}
 summary(fraudTotal.db$city_pop)
 class(fraudTotal.db$city_pop)
 ```
-## Convert Characater Class to a Factor Class
-```{r}
-#fraudTotal.db$category <- as.factor(fraudTotal.db$category)
-```
 
-## Find the Standard Deviation and Variance of city_pop variable
+
+### Find the Standard Deviation and Variance of city_pop variable
 
 ```{r}
 sd(fraudTotal.db$city_pop)
 var(fraudTotal.db$city_pop)
 ```
 
-## Frequency of city_pop
+### Frequency of city_pop
 
 ```{r}
 table_city_pop <- table(fraudTotal.db$city_pop)
 head(table_city_pop)
 ```
 
-## Frequency Distribution of city_pop
+### Frequency Distribution of city_pop
 
 ```{r}
-barplot(table(fraudTotal.db$city_pop), las = 3, main = "Frequency Distribution of city_pop Field", xlab = "") 
-mtext("city_pop Values", side = 1)
+barplot(table(fraudTotal.db$city_pop), las = 3, main = "Frequency Distribution of City Population", xlab = "", ylab = "Frequency") 
+mtext("City Population", side = 1)
 
 ```
 
-# Univariate Analysis of job 
+## Univariate Analysis of job 
 
-##Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$job)) 
 ```
 
-## Summary of job Column
+### Summary of job Column
 
 ```{r}
 summary(fraudTotal.db$job)
 class(fraudTotal.db$job)
 ```
-## Convert Characater Class to a Factor Class
+
+### Convert Characater Class to a Factor Class
 ```{r}
 fraudTotal.db$job <- as.factor(fraudTotal.db$job)
 ```
 
-## Find the Standard Deviation and Variance of cc_num variable
 
-```{r}
-#sd(fraudTotal.db$category)
-#var(fraudTotal.db$category)
-```
-
-## Frequency of job
+### Frequency of job
 
 ```{r}
 table_job <- table(fraudTotal.db$job)
 head(table_job)
 ```
 
-## Frequency Distribution of job
+### Frequency Distribution of job
 
 ```{r}
-barplot(table(fraudTotal.db$job), las = 3, main = "Frequency Distribution of job Field", xlab = "") 
-mtext("job Values", side = 1)
+barplot(table(fraudTotal.db$job), las = 3, main = "Frequency Distribution of Jobs", xlab = "", ylab = "Frequency") 
+mtext("Jobs of Card Holders", side = 1)
 
 ```
 
-# Univariate Analysis of dob 
+## Univariate Analysis of dob 
 
-##Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$dob)) 
 ```
-## Converting Character to DateTime class
+### Converting Character to DateTime class
 
 ```{r}
 library(lubridate)
@@ -696,201 +633,181 @@ library(lubridate)
 fraudTotal.db$dob <- ymd(fraudTotal.db$dob)
 ```
 
-## Summary of dob Column
+### Summary of dob Column
 
 ```{r}
 summary(fraudTotal.db$dob)
 class(fraudTotal.db$dob)
 ```
-## Convert Characater Class to a Factor Class
-```{r}
-#fraudTotal.db$category <- as.factor(fraudTotal.db$category)
-```
 
-## Find the Standard Deviation and Variance of dob variable
+
+### Find the Standard Deviation and Variance of dob variable
 
 ```{r}
 sd(fraudTotal.db$dob)
 var(fraudTotal.db$dob)
 ```
 
-## Frequency of dob
+### Frequency of dob
 
 ```{r}
 table_dob <- table(fraudTotal.db$dob)
 head(table_dob)
 ```
 
-## Frequency Distribution of dob
+### Frequency Distribution of dob
 
 ```{r}
-barplot(table(fraudTotal.db$dob), las = 3, main = "Frequency Distribution of dob Field", xlab = "") 
-mtext("dob Values", side = 1)
+barplot(table(fraudTotal.db$dob), las = 3, main = "Frequency Distribution of Date of Birth", xlab = "", ylab = "Frequency") 
+mtext("Date of Birth of Card Holders", side = 1)
 
 ```
 
-# Univariate Analysis of trans_num 
+## Univariate Analysis of trans_num 
 
-##Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$trans_num)) 
 ```
 
-## Summary of trans_num Column
+### Summary of trans_num Column
 
 ```{r}
 summary(fraudTotal.db$trans_num)
 class(fraudTotal.db$trans_num)
 ```
-## Convert Characater Class to a Factor Class
+### Convert Characater Class to a Factor Class
 ```{r}
 fraudTotal.db$trans_num <- as.factor(fraudTotal.db$trans_num)
 ```
 
-## Find the Standard Deviation and Variance of cc_num variable
 
-```{r}
-#sd(fraudTotal.db$category)
-#var(fraudTotal.db$category)
-```
-
-## Frequency of trans_num
+### Frequency of trans_num
 
 ```{r}
 table_trans_num <- table(fraudTotal.db$trans_num)
 head(table_trans_num)
 ```
 
-## Frequency Distribution of trans_num
+### Frequency Distribution of trans_num
 
 ```{r}
-barplot(table(fraudTotal.db$trans_num), las = 3, main = "Frequency Distribution of trans_num Field", xlab = "") 
-mtext("trans_num Values", side = 1)
+barplot(table(fraudTotal.db$trans_num), las = 3, main = "Frequency Distribution of Transation Number", xlab = "", ylab = "Frequency") 
+mtext("Transaction Numbers", side = 1)
 
 ```
 
 
-# Univariate Analysis of unix_time 
+## Univariate Analysis of unix_time 
 
-##Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$unix_time)) 
 ```
 
-## Summary of unix_time Column
+### Summary of unix_time Column
 
 ```{r}
 summary(fraudTotal.db$unix_time)
 class(fraudTotal.db$unix_time)
 ```
-## Convert Characater Class to a Factor Class
-```{r}
-#fraudTotal.db$job <- as.factor(fraudTotal.db$job)
-```
 
-## Find the Standard Deviation and Variance of unix_time variable
+
+### Find the Standard Deviation and Variance of unix_time variable
 
 ```{r}
 sd(fraudTotal.db$unix_time)
 var(fraudTotal.db$unix_time)
 ```
 
-## Frequency of unix_time
+### Frequency of unix_time
 
 ```{r}
 table_unix_time <- table(fraudTotal.db$unix_time)
 head(table_unix_time)
 ```
 
-## Frequency Distribution of unix_time
+### Frequency Distribution of unix_time
 
 ```{r}
-barplot(table(fraudTotal.db$unix_time), las = 3, main = "Frequency Distribution of unix_time Field", xlab = "") 
-mtext("unix_time Values", side = 1)
+barplot(table(fraudTotal.db$unix_time), las = 3, main = "Frequency Distribution of Unix Time", xlab = "", ylab = "Frequency") 
+mtext("Unix Time", side = 1)
 
 ```
 
-# Univariate Analysis of merch_long 
+## Univariate Analysis of merch_long 
 
-##Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$merch_long)) 
 ```
 
-## Summary of merch_long Column
+### Summary of merch_long Column
 
 ```{r}
 summary(fraudTotal.db$merch_long)
 class(fraudTotal.db$merch_long)
 ```
-## Convert Characater Class to a Factor Class
-```{r}
-#fraudTotal.db$merch_long <- as.factor(fraudTotal.db$merch_long)
-```
 
-## Find the Standard Deviation and Variance of cc_num variable
+
+### Find the Standard Deviation and Variance of merch_long variable
 
 ```{r}
 sd(fraudTotal.db$merch_long)
 var(fraudTotal.db$merch_long)
 ```
 
-## Frequency of merch_long
+### Frequency of merch_long
 
 ```{r}
 table_merch_long <- table(fraudTotal.db$merch_long)
 head(table_merch_long)
 ```
 
-## Frequency Distribution of merch_long
+### Frequency Distribution of merch_long
 
 ```{r}
-barplot(table(fraudTotal.db$merch_long), las = 3, main = "Frequency Distribution of merch_long Field", xlab = "") 
-mtext("merch_long Values", side = 1)
-
+barplot(table(fraudTotal.db$merch_long), las = 3, main = "Frequency Distribution of Merchant Longitude", xlab = "", ylab = "Frequency")
+mtext("Merchant Longitude", side = 1)
 ```
 
-# Univariate Analysis of merch_lat 
+## Univariate Analysis of merch_lat 
 
-##Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$merch_lat)) 
 ```
 
-## Summary of merch_lat Column
+### Summary of merch_lat Column
 
 ```{r}
 summary(fraudTotal.db$merch_lat)
 class(fraudTotal.db$merch_lat)
 ```
-## Convert Characater Class to a Factor Class
-```{r}
-#fraudTotal.db$merch_lat <- as.factor(fraudTotal.db$merch_lat)
-```
 
-## Find the Standard Deviation and Variance of merch_lat variable
+### Find the Standard Deviation and Variance of merch_lat variable
 
 ```{r}
 sd(fraudTotal.db$merch_lat)
 var(fraudTotal.db$merch_lat)
 ```
 
-## Frequency of merch_lat
+### Frequency of merch_lat
 
 ```{r}
 table_merch_lat <- table(fraudTotal.db$merch_lat)
 head(table_merch_lat)
 ```
 
-## Frequency Distribution of lat
+### Frequency Distribution of lat
 
 ```{r}
-barplot(table(fraudTotal.db$merch_lat), las = 3, main = "Frequency Distribution of merch_lat Field", xlab = "") 
-mtext("merch_lat Values", side = 1)
+barplot(table(fraudTotal.db$merch_lat), las = 3, main = "Frequency Distribution of Merchant Latitude", xlab = "", ylab = "Frequency") 
+mtext("Merchant Longitude", side = 1)
 
 ```
 
@@ -899,46 +816,40 @@ mtext("merch_lat Values", side = 1)
 
 
 
+## Univariate Analysis of is_fraud (Dependent Variable)
 
-
-
-# Univariate Analysis of is_fraud (Dependent Variable)
-
-##Checking to see if any NA values exist
+### Checking to see if any NA values exist
 
 ```{r}
 sum(is.na(fraudTotal.db$is_fraud)) 
 ```
 
-## Summary of is_fraud Column
+### Summary of is_fraud Column
 
 ```{r}
 summary(fraudTotal.db$is_fraud)
 class(fraudTotal.db$is_fraud)
 ```
-## Convert Characater Class to a Factor Class
-```{r}
-#fraudTotal.db$is_fraud <- as.factor(fraudTotal.db$is_fraud)
-```
 
-## Find the Standard Deviation and Variance of cc_num variable
+
+### Find the Standard Deviation and Variance of cc_num variable
 
 ```{r}
 sd(fraudTotal.db$is_fraud)
 var(fraudTotal.db$is_fraud)
 ```
 
-## Frequency of is_fraud
+### Frequency of is_fraud
 
 ```{r}
 table(fraudTotal.db$is_fraud)
 ```
 
-## Frequency Distribution of is_fraud
+### Frequency Distribution of is_fraud
 
 ```{r}
-barplot(table(fraudTotal.db$is_fraud), las = 3, main = "Frequency Distribution of is_fraud Field", xlab = "") 
-mtext("is_fraud Values", side = 1)
+barplot(table(fraudTotal.db$is_fraud), las = 3, main = "Frequency Distribution of Fradulant Transaction", xlab = "", ylab = "Frequency") 
+mtext("Fraudulant Transactions", side = 1)
 
 ```
 

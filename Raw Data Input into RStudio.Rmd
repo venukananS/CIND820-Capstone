@@ -37,10 +37,4 @@ summary(fraudTotal.db)
 ```{r}
 colnames(fraudTotal.db)
 ```
-```{r}
-describe(fraudTotal.db)
-```
-```{r}
-
-```
 
