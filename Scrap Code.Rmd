@@ -89,6 +89,17 @@ pcaCharts(fraudTotal.db_pca)
 ```
 
 
+### Trying to convert categorical data into numerical
+```{r}
+
+fraudTotal.db$first <- as.numeric(fraudTotal.db$first)
+fraudTotal.db$first <- as.character(fraudTotal.db$first)
+
+
+```
+
+
+
 
 
 

@@ -29,9 +29,14 @@ FD_Test <- fraudTotal.db[!TrainTestData,]
 #converting dob to numeric
 FD_Train$dob <- as.numeric(FD_Train$dob)
 FD_Test$dob <- as.numeric(FD_Test$dob)
+
+
 #convertig trans_date_trans_time to numeric
 FD_Train$trans_date_trans_time <- as.numeric(as.POSIXct(FD_Train$trans_date_trans_time))
 FD_Test$trans_date_trans_time <- as.numeric(as.POSIXct(FD_Test$trans_date_trans_time))
+
+
+
 #If there is a need to convert back then need to figure out the way to do that.
 ###FD_Train$trans_date_trans_time <- strptime(FD_Train$trans_date_trans_time, format = "%Y%m%d %H:%M:%s")
 ###FD_Train_trial2 <- as.numeric(FD_Train$trans_date_trans_time)
@@ -48,7 +53,7 @@ FD_Test$trans_date_trans_time <- as.numeric(as.POSIXct(FD_Test$trans_date_trans_
 ```
 
 
-## Treatment for Imbalance Data using SMOTE
+## Treatment for Imbalance Data using ROSE
 ```{r}
 #install.packages("ROSE")
 library(ROSE)
@@ -61,7 +66,7 @@ table(FD_ROSE$data$is_fraud)
 
 FD_Train_ROSE <- FD_ROSE$data
 
-Reduced_FD_Train_ROSE <- subset(FD_Train_ROSE, select = c(2, 4, 6, 10, 11, 13, 14, 18, 20, 22, 23))
+Reduced_FD_Train_ROSE <- subset(FD_Train_ROSE, select = c(2, 5, 6, 10, 11, 13, 14, 18, 20, 22, 23))
 
 ```
 
@@ -91,6 +96,7 @@ mod <- train(is_fraud ~., merch_long, data = Reduced_FD_Train_ROSE, method = "lm
 #install.packages("rpart.plot")
 library(rpart.plot)
 
+#Train with model
 fit_tree <- rpart(is_fraud~., data = Reduced_FD_Train_ROSE, method = "class")
 rpart.plot(fit_tree, extra = 110)
 
@@ -100,9 +106,31 @@ predict_tree <- predict(fit_tree, FD_Test, type = "class")
 
 
 ```
+## Testing merging of categorical variables
+```{r}
+
+Reduced_FD_Train_ROSE2 <- subset(FD_Train_ROSE, select = c(2, 4, 5, 6, 10, 11, 13, 14, 18, 20, 22, 23))
+
+Reduced_FD_Train_ROSE2$M_cat_merch <- transform(Reduced_FD_Train_ROSE2, newVar = paste(category, merchant))
+
+Reduced_FD_Train_ROSE2$M_cat_merch <- as.factor(Reduced_FD_Train_ROSE2$M_cat_merch)
+```
+
+
 
 
 ### Random Forest
+```{r}
+#install.packages("randomForest")
+library(randomForest)
+
+#Train with model
+fit_RF <- randomForest(is_fraud~., data = Reduced_FD_Train_ROSE, importance = TRUE, proximity = TRUE)
+
+#Prediction
+predict_RF <- predict(fit_RF, FD_Test, type)
+
+```
 
 
 ### K-Nearest Neighbours

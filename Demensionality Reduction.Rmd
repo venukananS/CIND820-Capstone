@@ -35,7 +35,19 @@ FWD_fit_cat <- ols_step_forward_p(lm_model_cat, penter=0.05)
 FWD_fit_cat
 
 ```
-## Dementionality Reduction Using Correlation of Categorical Variables
+## Dementionality Reduction Using Random Forest Method of Categorical Variables
+
+```{r}
+#install.packages("party")
+library(party)
+fraudTotal.db_cat <- subset(fraudTotal.db, select = c(4, 5, 7, 23))
+fraudTotal.db_cat$is_fraud <- as.factor(fraudTotal.db_cat$is_fraud)
+
+fraudTotal.db_cat_RF <- cforest(is_fraud~., data = fraudTotal.db_cat, control = cforest_unbiased(mtry = 2, ntree = 50))
+varimp(fraudTotal.db_cat_RF)
+
+```
+
 
 ### Chi Square test of merchant and category
 ```{r}
