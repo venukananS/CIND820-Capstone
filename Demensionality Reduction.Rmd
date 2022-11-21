@@ -26,7 +26,7 @@ FWD_fit_num
 ```
 
 # Feature Selection Using Forward Selection for Categorical Variables
-```{r}
+```{r eval=FALSE, include=FALSE}
 
 lm_model_cat <- lm(is_fraud~merchant+category, data = fraudTotal.db)
 
@@ -37,7 +37,7 @@ FWD_fit_cat
 ```
 ## Dementionality Reduction Using Random Forest Method of Categorical Variables
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 #install.packages("party")
 library(party)
 fraudTotal.db_cat <- subset(fraudTotal.db, select = c(4, 5, 7, 23))

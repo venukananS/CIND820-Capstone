@@ -2,7 +2,9 @@
 title: "Raw Data Input into RStudio"
 author: "Venukanan Subenthiran"
 date: "2022-09-18"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}

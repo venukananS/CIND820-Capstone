@@ -72,7 +72,7 @@ Reduced_FD_Train_ROSE <- subset(FD_Train_ROSE, select = c(2, 5, 6, 10, 11, 13, 1
 
 
 ## Cross Validation???
-```{r}
+```{r eval=FALSE, include=FALSE}
 #install.packages("caret")
 library(caret)
 
@@ -107,7 +107,7 @@ predict_tree <- predict(fit_tree, FD_Test, type = "class")
 
 ```
 ## Testing merging of categorical variables
-```{r}
+```{r eval=FALSE, include=FALSE}
 
 Reduced_FD_Train_ROSE2 <- subset(FD_Train_ROSE, select = c(2, 4, 5, 6, 10, 11, 13, 14, 18, 20, 22, 23))
 
@@ -120,7 +120,7 @@ Reduced_FD_Train_ROSE2$M_cat_merch <- as.factor(Reduced_FD_Train_ROSE2$M_cat_mer
 
 
 ### Random Forest
-```{r}
+```{r eval=FALSE, include=FALSE}
 #install.packages("randomForest")
 library(randomForest)
 
@@ -145,7 +145,8 @@ predict_RF <- predict(fit_RF, FD_Test, type)
 
 ### Decision Tree
 ```{r}
-table(FD_Test$is_fraud, predict_tree)
+confusionMatrix_DS <- table(FD_Test$is_fraud, predict_tree)
+
 
 ```
 
@@ -157,3 +158,25 @@ table(FD_Test$is_fraud, predict_tree)
 ### Logistic Regression
 
 ## Accuracy, Recall, and Precision
+### Accuracy, Recall, and Precision for Decision Tree
+```{r}
+
+confusionMatrix_DS
+FD_Test$is_fraud <- as.factor(FD_Test$is_fraud)
+
+#Accuracy
+accuracy.meas(FD_Test$is_fraud, predict_tree)
+
+
+# Recall
+recall(FD_Test$is_fraud, predict_tree)
+
+# Precision
+precision(FD_Test$is_fraud, predict_tree)
+
+print(confusionMatrix(data = FD_Test$is_fraud, reference = predict_tree))
+
+
+
+```
+

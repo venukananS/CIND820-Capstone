@@ -1,11 +1,7 @@
 ---
 title: "Univariate Analysis"
 author: "Venukanan Subenthiran"
-<<<<<<< HEAD
-date: '2022-11-10'
-=======
 date: "2022-11-09"
->>>>>>> 771b459096335833e88d99e06476c521b0980a35
 output: html_document
 ---
 
@@ -13,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<<<<<<< HEAD
+
 # Understanding the Datafram as a Whole
 ## Provides baseline for creating a more details data dictionary.
 ```{r}
@@ -854,4 +850,4 @@ mtext("Fraudulant Transactions", side = 1)
 ```
 
 
->>>>>>> 771b459096335833e88d99e06476c521b0980a35
+
