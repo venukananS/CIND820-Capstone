@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+#load("R_Studio_Global_Variables.RData")
 ```
 
 # Experimental Design
@@ -66,7 +67,9 @@ table(FD_ROSE$data$is_fraud)
 
 FD_Train_ROSE <- FD_ROSE$data
 
+
 Reduced_FD_Train_ROSE <- subset(FD_Train_ROSE, select = c(2, 5, 6, 10, 11, 13, 14, 18, 20, 22, 23))
+Reduced_FD_Test <- subset(FD_Test, select = c(2, 5, 6, 10, 11, 13, 14, 18, 20, 22, 23))
 
 ```
 
@@ -134,10 +137,41 @@ predict_RF <- predict(fit_RF, FD_Test, type)
 
 
 ### K-Nearest Neighbours
+```{r}
+#install.packages("class")
+library(class)
+
+# Use square root of nrow to figure out value for k.
+nrow(Reduced_FD_Train_ROSE)
+
+# Convert factor values to numeric.
+Reduced_FD_Train_ROSE$category <- as.numeric(Reduced_FD_Train_ROSE$category)
+Reduced_FD_Train_ROSE$street <- as.numeric(Reduced_FD_Train_ROSE$street)
+Reduced_FD_Train_ROSE$city <- as.numeric(Reduced_FD_Train_ROSE$city)
+Reduced_FD_Test$category <- as.numeric(Reduced_FD_Test$category)
+Reduced_FD_Test$street <- as.numeric(Reduced_FD_Test$street)
+Reduced_FD_Test$city <- as.numeric(Reduced_FD_Test$city)
+
+# Train/prediction with model
+fit_knn_1138 <- knn(train = Reduced_FD_Train_ROSE, test = Reduced_FD_Test, cl = Reduced_FD_Train_ROSE$is_fraud ,k = 50)
+ #fit_knn_1139 <- knn(train = Reduced_FD_Train_ROSE, test = FD_Test, cl = Reduced_FD_Train_ROSE$is_fraud ,k = 1139)
+#(is_fraud~., data = Reduced_FD_Train_ROSE, k = 1361)
+
+
+
+
+```
+
+
 
 ## Regression
+### Logistic Regression Binomial
+```{r}
 
-### Logistic Regression biraviate??
+fit_lg <- glm(is_fraud~., data = Reduced_FD_Train_ROSE, family = "binomial")
+
+```
+
 
 # Evaluation
 
@@ -152,14 +186,25 @@ confusionMatrix_DS <- table(FD_Test$is_fraud, predict_tree)
 
 
 ### Random Forest
+```{r}
+
+```
+
 
 ### K-Nearest Neighbours
+```{r}
+library(caret)
+confusionMatrix_knn <- confusionMatrix(table(fit_knn_1138, FD_Test$is_fraud))
+confusionMatrix_knn
+```
+
 
 ### Logistic Regression
 
 ## Accuracy, Recall, and Precision
 ### Accuracy, Recall, and Precision for Decision Tree
 ```{r}
+library(caret)
 
 confusionMatrix_DS
 FD_Test$is_fraud <- as.factor(FD_Test$is_fraud)
@@ -170,6 +215,7 @@ accuracy.meas(FD_Test$is_fraud, predict_tree)
 
 # Recall
 recall(FD_Test$is_fraud, predict_tree)
+
 
 # Precision
 precision(FD_Test$is_fraud, predict_tree)
