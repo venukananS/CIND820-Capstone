@@ -7,16 +7,14 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-load("R_Studio_Global_Variables.RData")
+#load("R_Studio_Global_Variables.RData")
 ```
+
 
 # Feature Selection Using Forward Selection for Numeric Variables
 ```{r}
 #install.packages("olsrr")
 library(olsrr)
-
-
-
 
 lm_model_numeric <- lm(is_fraud~trans_date_trans_time+cc_num+amt+zip+lat+long+city_pop+dob+unix_time+merch_lat+merch_long, data = fraudTotal.db)
 
@@ -26,10 +24,33 @@ FWD_fit_num
 
 ```
 
-# Feature Selection Using Forward Selection for Categorical Variables
-```{r eval=FALSE, include=FALSE}
+#Converting all Categorical variables to numeric.
+```{r}
 
-lm_model_cat <- lm(is_fraud~merchant+category, data = fraudTotal.db)
+fraudTotal.db_fact_num <- fraudTotal.db
+
+str(fraudTotal.db_fact_num)
+fraudTotal.db_fact_num$trans_date_trans_time <- as.numeric(fraudTotal.db_fact_num$trans_date_trans_time)
+fraudTotal.db_fact_num$merchant <- as.numeric(fraudTotal.db_fact_num$merchant)
+fraudTotal.db_fact_num$category <- as.numeric(fraudTotal.db_fact_num$category)
+fraudTotal.db_fact_num$first <- as.numeric(fraudTotal.db_fact_num$first)
+fraudTotal.db_fact_num$last <- as.numeric(fraudTotal.db_fact_num$last)
+fraudTotal.db_fact_num$gender <- as.numeric(fraudTotal.db_fact_num$gender)
+fraudTotal.db_fact_num$street <- as.numeric(fraudTotal.db_fact_num$street)
+fraudTotal.db_fact_num$city <- as.numeric(fraudTotal.db_fact_num$city)
+fraudTotal.db_fact_num$state <- as.numeric(fraudTotal.db_fact_num$state)
+fraudTotal.db_fact_num$job <- as.numeric(fraudTotal.db_fact_num$job)
+fraudTotal.db_fact_num$dob <- as.numeric(fraudTotal.db_fact_num$dob)
+fraudTotal.db_fact_num$trans_num <- as.numeric(fraudTotal.db_fact_num$trans_num)
+
+
+```
+
+
+# Feature Selection Using Forward Selection for Categorical Variables
+```{r}
+
+lm_model_cat <- lm(is_fraud~merchant + category + first + last + gender + street + city + state + job + trans_num, data = fraudTotal.db_fact_num)
 
 FWD_fit_cat <- ols_step_forward_p(lm_model_cat, penter=0.05)
 
