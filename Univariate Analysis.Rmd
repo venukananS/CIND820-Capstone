@@ -7,7 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-load("R_Studio_Global_Variables.RData")
+#load("R_Studio_Global_Variables.RData")
 ```
 
 
@@ -128,6 +128,7 @@ head(table_merchant)
 ```{r}
 fraudTotal.db$merchant <- as.factor(fraudTotal.db$merchant)
 class(fraudTotal.db$merchant)
+
 ```
 
 ### Frequency Distribution of trans_date_trans_time variable
