@@ -1,0 +1,334 @@
+---
+title: "Experimental Design"
+author: "Venukanan Subenthiran"
+date: "2022-11-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#load("R_Studio_Global_Variables.RData")
+```
+
+# Experimental Design
+
+## Splitting the Data into Training and Test Sets
+
+```{r}
+
+#install.packages("caTools")
+library(caTools)
+
+
+
+set.seed(123)
+
+TrainTestData <- sample.split(Y = fraudTotal.db$is_fraud, SplitRatio = 0.7)
+FD_Train <- fraudTotal.db[TrainTestData,]
+FD_Test <- fraudTotal.db[!TrainTestData,]
+
+#converting dob to numeric
+FD_Train$dob <- as.numeric(FD_Train$dob)
+FD_Test$dob <- as.numeric(FD_Test$dob)
+
+
+#convertig trans_date_trans_time to numeric
+FD_Train$trans_date_trans_time <- as.numeric(as.POSIXct(FD_Train$trans_date_trans_time))
+FD_Test$trans_date_trans_time <- as.numeric(as.POSIXct(FD_Test$trans_date_trans_time))
+
+
+
+#If there is a need to convert back then need to figure out the way to do that.
+###FD_Train$trans_date_trans_time <- strptime(FD_Train$trans_date_trans_time, format = "%Y%m%d %H:%M:%s")
+###FD_Train_trial2 <- as.numeric(FD_Train$trans_date_trans_time)
+
+###FD_Train$trans_date_trans_time <- as.POSIXct(format(FD_Train$trans_date_trans_time))
+###as.Date.POSIXct(FD_Train$trans_date_trans_time, origin = "1970-01-01 00:00")
+
+
+
+#This will convert dob back to date.
+###FD_Train$dob <- as.Date(FD_Train$dob, origin = "1970-01-01")
+
+
+```
+
+
+
+
+
+## Treatment for Imbalance Data using ROSE
+```{r}
+#install.packages("ROSE")
+library(ROSE)
+
+table(FD_Train$is_fraud)
+
+FD_ROSE <- ROSE(formula = is_fraud~.,data = FD_Train, seed = 345)
+
+table(FD_ROSE$data$is_fraud)
+
+FD_Train_ROSE <- FD_ROSE$data
+
+
+Reduced_FD_Train_ROSE <- subset(FD_Train_ROSE, select = c(2, 5, 6, 7, 9, 13, 14, 18, 20, 22, 23))
+Reduced_FD_Test <- subset(FD_Test, select = c(2, 5, 6, 7, 9, 13, 14, 18, 20, 22, 23))
+
+Reduced_FD_Train_ROSE_KNN <- Reduced_FD_Train_ROSE 
+Reduced_FD_Test_KNN <- Reduced_FD_Test
+
+Reduced_FD_Train_ROSE_RF <- Reduced_FD_Train_ROSE 
+Reduced_FD_Test_RF <- Reduced_FD_Test
+
+Reduced_FD_Train_ROSE_num <- subset(FD_Train_ROSE, select = c(2, 6, 9, 13, 14, 18, 20, 22, 23))
+Reduced_FD_Test_ROSE_num <- subset(FD_Test, select = c(2, 6, 9, 13, 14, 18, 20, 22, 23))
+
+```
+
+
+## Understanding dataset
+```{r}
+
+db.train_rose <- Reduced_FD_Train_ROSE3
+
+db.train_rose$category <- as.numeric(db.train_rose$category)
+db.train_rose$first <- as.numeric(db.train_rose$first)
+
+```
+
+
+
+## K Fold Cross Validation
+```{r eval=FALSE, include=FALSE}
+#install.packages("caret")
+library(caret)
+
+
+
+#specify cross-validation method
+control <- trainControl(method = "cv", number = 10)
+
+#fit a regression model and use k-fold CD to evaluate performance
+mod <- train(is_fraud ~., data = fraudTotal.db, method = "lm", trControl = control)
+mod2 <- train(is_fraud ~ trans_date_trans_time+gender+zip+lat+dob+unix_time+merch_long, data = fraudTotal.db, method = "lm", trControl = control)
+mod3 <- train(is_fraud ~ trans_date_trans_time+category+gender+zip+lat+dob+unix_time+merch_long, data = fraudTotal.db, method = "lm", trControl = control)
+mod4 <- train(is_fraud ~ trans_date_trans_time+category+first+gender+zip+lat+dob+unix_time+merch_long, data = fraudTotal.db, method = "lm", trControl = control)
+
+mod2
+mod3
+mod4
+
+# Unable to run, due to limited RAM size on PC.
+```
+
+
+
+# Modeling
+
+## Classification
+
+### Decision Tree
+```{r}
+#install.packages("rpart.plot")
+library(rpart.plot)
+
+#Train with model
+fit_tree <- rpart(is_fraud~., data = Reduced_FD_Train_ROSE, method = "class")
+rpart.plot(fit_tree, extra = 110)
+
+# Prediction
+predict_tree <- predict(fit_tree, FD_Test, type = "class")
+
+
+
+```
+
+
+### Random Forest
+```{r}
+#install.packages("randomForest")
+library(randomForest)
+
+Reduced_FD_Train_ROSE_RF$first <- as.numeric(Reduced_FD_Train_ROSE_RF$first)
+Reduced_FD_Test_RF$first <- as.numeric(Reduced_FD_Test_RF$first)
+
+#Train with model
+fit_RF <- randomForest(is_fraud~., data = Reduced_FD_Train_ROSE_RF, importance = TRUE, proximity = TRUE, na.action = na.roughfix)
+
+#Prediction
+predict_RF <- predict(fit_RF, Reduced_FD_Test_RF, type)
+
+```
+
+
+### K-Nearest Neighbours
+```{r}
+#install.packages("class")
+library(class)
+
+# Use square root of nrow to figure out value for k.
+nrow(Reduced_FD_Train_ROSE)
+
+# Convert factor values to numeric.
+Reduced_FD_Train_ROSE_KNN$category <- as.numeric(Reduced_FD_Train_ROSE$category)
+Reduced_FD_Train_ROSE_KNN$first <- as.numeric(Reduced_FD_Train_ROSE$first)
+
+Reduced_FD_Test_KNN$category <- as.numeric(Reduced_FD_Test$category)
+Reduced_FD_Test_KNN$first <- as.numeric(Reduced_FD_Test$first)
+
+
+#Normalize category and fist
+FD_Train_proscess <- preProcess(as.data.frame(Reduced_FD_Train_ROSE_KNN), method = c("range"))
+FD_Train_predict <- predict(FD_Train_proscess, as.data.frame(Reduced_FD_Train_ROSE_KNN))
+
+FD_Test_proscess <- preProcess(as.data.frame(Reduced_FD_Test_KNN), method = c("range"))
+FD_Test_predict <- predict(FD_Test_proscess, as.data.frame(Reduced_FD_Test_KNN))
+
+Reduced_FD_Train_ROSE_KNN$category <- FD_Train_predict$category
+Reduced_FD_Train_ROSE_KNN$first <- FD_Train_predict$first
+
+Reduced_FD_Test_KNN$category <- FD_Test_predict$category
+Reduced_FD_Test_KNN$first <- FD_Test_predict$first
+
+
+# Train/prediction with model
+fit_knn_50 <- knn(train = Reduced_FD_Train_ROSE_KNN, test = Reduced_FD_Test_KNN, cl = Reduced_FD_Train_ROSE_KNN$is_fraud ,k = 50)
+ #fit_knn_1139 <- knn(train = Reduced_FD_Train_ROSE, test = FD_Test, cl = Reduced_FD_Train_ROSE$is_fraud ,k = 1139)
+#(is_fraud~., data = Reduced_FD_Train_ROSE, k = 1361)
+
+
+
+
+```
+
+
+
+## Regression
+### Logistic Regression Binomial
+```{r}
+library(caret)
+library(ggplot2)
+library(lattice)
+
+# Train with model
+fit_lm <- glm(is_fraud ~., family = "binomial", Reduced_FD_Train_ROSE)
+
+# Prediction with model
+predict_lm <- predict(fit_lm, FD_Test, type = "response")
+
+```
+
+### Naive Bayes
+```{r}
+
+#install.packages("e1071")
+library(e1071)
+
+
+# Train with model
+fit_nb <- naiveBayes(is_fraud ~., Reduced_FD_Train_ROSE)
+
+# Prediction with model
+predict_nb <- predict(fit_nb, newdata = FD_Test)
+
+
+```
+
+
+
+# Evaluation
+
+## Confusion Matrix
+
+### Decision Tree
+```{r}
+confusionMatrix_DS <- table(FD_Test$is_fraud, predict_tree)
+
+library(caret)
+
+confusionMatrix_DS
+FD_Test$is_fraud <- as.factor(FD_Test$is_fraud)
+
+#Accuracy
+accuracy.meas(FD_Test$is_fraud, predict_tree)
+
+
+# Recall
+recall(FD_Test$is_fraud, predict_tree)
+
+
+# Precision
+precision(FD_Test$is_fraud, predict_tree)
+
+print(confusionMatrix(data = FD_Test$is_fraud, reference = predict_tree))
+
+
+```
+
+
+### Random Forest
+```{r}
+
+```
+
+
+### K-Nearest Neighbours
+```{r}
+library(caret)
+confusionMatrix_knn <- confusionMatrix(table(fit_knn_50, FD_Test$is_fraud))
+confusionMatrix_knn
+```
+
+
+### Logistic Regression
+```{r}
+library(caret)
+
+
+
+# Convert predict_lm to 1's and 0's
+###predict_lm2 <- predict_lm
+###predict_lm2 <- ifelse(predict_lm2 >= 1, 1, 0)
+###table(predict_lm2)
+
+confusionMatrix_lm <- confusionMatrix(data = as.factor(predict_lm), FD_Test$is_fraud)
+
+```
+
+### Naive Bayes
+```{r}
+
+cm_nb <- table(FD_Test$is_fraud, predict_nb)
+cm_nb
+
+confusionMatrix(cm_nb)
+
+```
+
+
+
+## Accuracy, Recall, and Precision
+### Accuracy, Recall, and Precision for Decision Tree
+```{r}
+library(caret)
+
+confusionMatrix_DS
+FD_Test$is_fraud <- as.factor(FD_Test$is_fraud)
+
+#Accuracy
+accuracy.meas(FD_Test$is_fraud, predict_tree)
+
+
+# Recall
+recall(FD_Test$is_fraud, predict_tree)
+
+
+# Precision
+precision(FD_Test$is_fraud, predict_tree)
+
+print(confusionMatrix(data = FD_Test$is_fraud, reference = predict_tree))
+
+
+
+```
+

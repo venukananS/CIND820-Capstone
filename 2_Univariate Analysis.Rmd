@@ -47,7 +47,7 @@ summary(fraudTotal.db$trans_date_trans_time)
 ### Histogram of trans_date_trans_time variable
 
 ```{r}
-hist(fraudTotal.db$trans_date_trans_time, breaks = 10 , main = "Histogram of Date/Time Data Collected", xlab = "trans_date_trans_time in Years")
+hist(fraudTotal.db$trans_date_trans_time, breaks = 10 , main = "Histogram of Date/Time Data Collected", xlab = "Transaction per Year", freq = TRUE)
 ```
 
 ## Univariate Analysis of cc_num 
@@ -116,6 +116,7 @@ summary(fraudTotal.db$merchant)
 head(unique(fraudTotal.db$merchant))
 
 ```
+
 ```{r}
 table_merchant <- table(fraudTotal.db$merchant)
 head(table_merchant)
@@ -159,14 +160,16 @@ fraudTotal.db$category <- as.factor(fraudTotal.db$category)
 ### Frequency of category values
 
 ```{r}
-table(fraudTotal.db$category)
+table_category <- sort(table(fraudTotal.db$category), decreasing = T)
+head(table_category)
+Cat_x_lab <- c("Gas", "Grocery", "Home", "Shopping", "Kids/Pets", "Online")
+
 ```
 
 ## Frequency Distribution of category
 
 ```{r}
-barplot(table(fraudTotal.db$category), las = 3, main = "Frequency Distribution of Merchant Categories", xlab = "", ylab = "Frequency") 
-mtext("Catgory Values", side = 1)
+barplot(head(table_category), main = "Frequency Distribution of Merchant Categories", xlab = "Catgory" , ylab = "Frequency", names.arg = Cat_x_lab) 
 
 ```
 
@@ -417,14 +420,15 @@ fraudTotal.db$state <- as.factor(fraudTotal.db$state)
 ### Frequency of state
 
 ```{r}
-table(fraudTotal.db$state)
+table_state <- sort(table(fraudTotal.db$state), decreasing = T)
+
 ```
 
 ### Frequency Distribution of state
 
 ```{r}
-barplot(table(fraudTotal.db$state), las = 3, main = "Frequency Distribution of States", xlab = "", ylab = "Frequency") 
-mtext("States", side = 1)
+barplot(head(table_state, 20), las = 3, main = "Frequency Distribution of States", xlab = "", ylab = "Frequency") 
+mtext("State", side = 1)
 
 ```
 
@@ -846,8 +850,7 @@ table(fraudTotal.db$is_fraud)
 ### Frequency Distribution of is_fraud
 
 ```{r}
-barplot(table(fraudTotal.db$is_fraud), las = 3, main = "Frequency Distribution of Fradulant Transaction", xlab = "", ylab = "Frequency") 
-mtext("Fraudulant Transactions", side = 1)
+barplot(table(fraudTotal.db$is_fraud), main = "Frequency Distribution of Fradulant Transaction", xlab = "Transaction", ylab = "Frequency", names.arg = c("Legitimate Transaction", "Fraudulant Transaction")) 
 
 ```
 

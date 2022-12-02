@@ -99,6 +99,27 @@ fraudTotal.db$first <- as.character(fraudTotal.db$first)
 ```
 
 
+###binary logistic regression
+```{r}
+#fit_lg <- glm(is_fraud~., data = Reduced_FD_Train_ROSE, family = "binomial")
+#install.packages("biglm")
+#library(biglm)
+
+#install.packages("gputools")
+#library(gputools)
+
+
+
+
+#fit_bigglm <- bigglm(is_fraud ~ trans_date_trans_time + category + amt + street + city + zip + lat + dob + unix_time + merch_long, data = Reduced_FD_Train_ROSE, family = "binomial")
+
+
+
+#fit_bigglm_ffdf <- bigglm.data.frame(is_fraud ~ trans_date_trans_time + category + amt + street + city + zip + lat + dob + unix_time + merch_long, data = Reduced_FD_Train_ROSE, family = binomial(link = "logit"), chunksize = 51000)
+```
+
+
+
 
 
 

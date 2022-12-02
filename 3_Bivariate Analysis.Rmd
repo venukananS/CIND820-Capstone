@@ -7,7 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-load("R_Studio_Global_Variables.RData")
+#load("R_Studio_Global_Variables.RData")
 ```
 
 # Bivariate Analysis of fraudTotal.db data frame
@@ -73,7 +73,7 @@ plot(fraudTotal.db$zip, fraudTotal.db$long, main = "Scatterplot of credit card N
 ## Scatterplot of amt and is_fraud
 
 ```{r}
-plot(fraudTotal.db$amt, fraudTotal.db$is_fraud, main = "Scatterplot of amount and Is Fraud", xlab = "Amount", ylab = "Is Fraud")
+plot(fraudTotal.db$is_fraud, fraudTotal.db$amt, main = "Scatterplot of amount and Is Fraud", xlab = "Amount", ylab = "Is Fraud")
 ```
 
 ## Scatterplot of Amt and city_pop

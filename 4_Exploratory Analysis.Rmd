@@ -7,7 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-load("R_Studio_Global_Variables.RData")
+#load("R_Studio_Global_Variables.RData")
 ```
 
 # Explorartoy Analysis
@@ -22,6 +22,7 @@ nrow(fraudTotal.db_fraud)
 ```
 ## Does Having a Higher City Population Have More Fraud?
 ```{r}
+#install.packages("ggplot2")
 
 fraudTotal.db_fraud$city_pop <- ifelse(fraudTotal.db_fraud$city_pop < mean(fraudTotal.db_fraud$city_pop), 0, 1)
 
@@ -65,10 +66,18 @@ fraud_based_on_gender
 
 ## Normalization of Numeric Values
 
+## Change Gender to numeric
+```{r}
+fraudTotal.db$gender <- ifelse(fraudTotal.db$gender == "M", 1, 0)
+
+```
+
 ### Applying normalization to numeric variables
 
 ```{r}
-data2 <- fraudTotal.db[c(3, 6, 13, 14, 15, 16, 20, 21, 22, 23)]
+
+data2 <- fraudTotal.db[c(3, 6, 9, 13, 14, 15, 16, 20, 21, 22, 23)]
+#, 9
 summary(data2)
 #install.packages("caret")
 library(caret)
@@ -83,6 +92,7 @@ fraudTotal.db_norm <- predict(fraudTotal.db_process, as.data.frame(data2))
 
 fraudTotal.db$cc_num <- fraudTotal.db_norm$cc_num
 fraudTotal.db$amt <- fraudTotal.db_norm$amt
+fraudTotal.db$gender <- fraudTotal.db_norm$gender
 fraudTotal.db$zip <- fraudTotal.db_norm$zip
 fraudTotal.db$lat <- fraudTotal.db_norm$lat
 fraudTotal.db$long <- fraudTotal.db_norm$long
