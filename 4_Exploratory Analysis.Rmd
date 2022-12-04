@@ -7,7 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-#load("R_Studio_Global_Variables.RData")
+load("R_Studio_Global_Variables.RData")
 ```
 
 # Explorartoy Analysis
@@ -28,7 +28,7 @@ fraudTotal.db_fraud$city_pop <- ifelse(fraudTotal.db_fraud$city_pop < mean(fraud
 
 library(ggplot2)
 
-fraud_based_on_city_pop <- ggplot(data = fraudTotal.db_fraud, aes(x = factor(city_pop), fill = city_pop)) + geom_bar(stat = "count", width = 0.7, alpha = 0.7) + ggtitle("Fraudulant Transactions By City Population") + xlab("City Population Above or Below Average") + ylab("Number of Fraudulant Transactions") + scale_x_discrete(labels = c("Below City Population Average", "Above City Population Average")) + theme(legend.position = "none")
+fraud_based_on_city_pop <- ggplot(data = fraudTotal.db_fraud, aes(x = factor(city_pop), fill = city_pop)) + geom_bar(stat = "count", width = 0.7, alpha = 0.7) + ggtitle("Fraudulent Transactions By City Population") + xlab("City Population Above or Below Average") + ylab("Number of Fraudulent Transactions") + scale_x_discrete(labels = c("Below City Population Average", "Above City Population Average")) + theme(legend.position = "none")
 fraud_based_on_city_pop
 
 
@@ -44,7 +44,7 @@ colnames(category_fraud.db)[1] <- "Category Type"
 
 #install.packages("treemap")
 library(treemap)
-treemap(category_fraud.db, index = "Category Type", vSize = "Freq", type = "index", title = "Merchant Category Types in Fraudulant Transactions", palette = "HCL", border.col = c("black"), border.lwds = 1, fontsize.labels = 10, fontcolor.labels = "white", fontface.labels = 1, bg.labels = c(0), align.labels = c("left", "top"), overlap.labels = 0.5, inflate.labels = T)
+treemap(category_fraud.db, index = "Category Type", vSize = "Freq", type = "index", title = "Merchant Category Types in Fraudulent Transactions", palette = "HCL", border.col = c("black"), border.lwds = 1, fontsize.labels = 10, fontcolor.labels = "white", fontface.labels = 1, bg.labels = c(0), align.labels = c("left", "top"), overlap.labels = 0.5, inflate.labels = T)
 
 ```
 
@@ -59,7 +59,7 @@ colnames(gender_fraud.db)[1] <- "Gender"
 
 library(ggplot2)
 
-fraud_based_on_gender <- ggplot(data = gender_fraud.db, aes(x = Gender, y = Freq , fill = Gender)) + geom_bar(stat = "identity", width = 0.7, alpha = 0.7) + ggtitle("Fraudulant Transactions By Gender") + xlab("Fradulant Transactions Committed Based on Gender") + ylab("Number of Fraudulant Transactions") + scale_x_discrete(labels = c("Fradulant Transactions Committed by Female", "Fradulant Transactions Committed by Male")) + theme(legend.position = "none")
+fraud_based_on_gender <- ggplot(data = gender_fraud.db, aes(x = Gender, y = Freq , fill = Gender)) + geom_bar(stat = "identity", width = 0.7, alpha = 0.7) + ggtitle("Fraudulent Transactions By Gender") + xlab("Fradulent Transactions Committed Based on Gender") + ylab("Number of Fraudulent Transactions") + scale_x_discrete(labels = c("Fradulent Transactions Committed by Female", "Fradulent Transactions Committed by Male")) + theme(legend.position = "none")
 fraud_based_on_gender
 
 ```
