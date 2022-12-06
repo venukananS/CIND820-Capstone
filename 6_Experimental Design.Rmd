@@ -7,7 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-#load("R_Studio_Global_Variables.RData")
+load("R_Studio_Global_Variables.RData")
 ```
 
 # Experimental Design
@@ -85,19 +85,6 @@ Reduced_FD_Test_ROSE_num <- subset(FD_Test, select = c(2, 6, 9, 13, 14, 18, 20, 
 
 ```
 
-
-## Understanding dataset
-```{r}
-
-db.train_rose <- Reduced_FD_Train_ROSE3
-
-db.train_rose$category <- as.numeric(db.train_rose$category)
-db.train_rose$first <- as.numeric(db.train_rose$first)
-
-```
-
-
-
 ## K Fold Cross Validation
 ```{r eval=FALSE, include=FALSE}
 #install.packages("caret")
@@ -145,7 +132,7 @@ predict_tree <- predict(fit_tree, FD_Test, type = "class")
 
 
 ### Random Forest
-```{r}
+```{r eval=FALSE, include=FALSE}
 #install.packages("randomForest")
 library(randomForest)
 
@@ -165,6 +152,7 @@ predict_RF <- predict(fit_RF, Reduced_FD_Test_RF, type)
 ```{r}
 #install.packages("class")
 library(class)
+library(caret)
 
 # Use square root of nrow to figure out value for k.
 nrow(Reduced_FD_Train_ROSE)
@@ -172,9 +160,12 @@ nrow(Reduced_FD_Train_ROSE)
 # Convert factor values to numeric.
 Reduced_FD_Train_ROSE_KNN$category <- as.numeric(Reduced_FD_Train_ROSE$category)
 Reduced_FD_Train_ROSE_KNN$first <- as.numeric(Reduced_FD_Train_ROSE$first)
+Reduced_FD_Train_ROSE_KNN$gender <- as.numeric(Reduced_FD_Train_ROSE$gender)
+
 
 Reduced_FD_Test_KNN$category <- as.numeric(Reduced_FD_Test$category)
 Reduced_FD_Test_KNN$first <- as.numeric(Reduced_FD_Test$first)
+Reduced_FD_Test_KNN$gender <- as.numeric(Reduced_FD_Test$gender)
 
 
 #Normalize category and fist
@@ -205,7 +196,7 @@ fit_knn_50 <- knn(train = Reduced_FD_Train_ROSE_KNN, test = Reduced_FD_Test_KNN,
 
 ## Regression
 ### Logistic Regression Binomial
-```{r}
+```{r eval=FALSE, include=FALSE}
 library(caret)
 library(ggplot2)
 library(lattice)
@@ -281,7 +272,7 @@ confusionMatrix_knn
 
 
 ### Logistic Regression
-```{r}
+```{r eval=FALSE, include=FALSE}
 library(caret)
 
 
